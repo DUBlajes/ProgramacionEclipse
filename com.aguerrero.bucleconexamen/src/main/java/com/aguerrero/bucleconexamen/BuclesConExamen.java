@@ -46,16 +46,16 @@ public class BuclesConExamen {
 			if ((animeFav.equalsIgnoreCase("Gundam"))) {
 				animeFavAcumulado = true;
 			}
-			if ((añosAcumulados == true) && (animeFavAcumulado == true)) {
-				acumulacionFinal = true;
-			}
 
 		} while (respuestaSioNo.equalsIgnoreCase("si"));
 
+			if ((añosAcumulados == true) && (animeFavAcumulado == true)) {
+				acumulacionFinal = true;
+			}
 		System.out
 				.println("El presupuesto anual de estos 3 otakus para gastarse en salones del manga es de un total de "
 						+ presupuestoAcumulado / otakusIntroducidos + " euros.");
-		float mediaKilometros = (float) ((metrosAcumulados) / 3f) / 1000f;
+		float mediaKilometros = (float) ((metrosAcumulados) / otakusIntroducidos) / 1000f; //tambien sería posible hacer 1f*numeroshort
 		System.out.println(
 				"La media que estos tres otakus son capaces de aguantar corriendo a lo Naruto sin detenerse es de "
 						+ mediaKilometros + " kms. Para sorpresa de nadie, no es mucho.");
