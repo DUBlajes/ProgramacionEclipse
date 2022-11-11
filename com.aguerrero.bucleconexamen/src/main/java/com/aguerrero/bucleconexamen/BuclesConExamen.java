@@ -40,6 +40,16 @@ public class BuclesConExamen {
 			metrosAcumulados += (short) naruto;
 			System.out.println("¿Quieres introducir los datos de otro otaku?");
 			respuestaSioNo = sc.nextLine();
+			if (añoNacimiento > 1900 && añoNacimiento < 2001) {
+				añosAcumulados = true;
+			}
+			if ((animeFav.equalsIgnoreCase("Gundam"))) {
+				animeFavAcumulado = true;
+			}
+			if ((añosAcumulados == true) && (animeFavAcumulado == true)) {
+				acumulacionFinal = true;
+			}
+
 		} while (respuestaSioNo.equalsIgnoreCase("si"));
 
 		System.out
@@ -49,16 +59,6 @@ public class BuclesConExamen {
 		System.out.println(
 				"La media que estos tres otakus son capaces de aguantar corriendo a lo Naruto sin detenerse es de "
 						+ mediaKilometros + " kms. Para sorpresa de nadie, no es mucho.");
-
-		if (añoNacimiento > 1900 && añoNacimiento < 2001) {
-			añosAcumulados = true;
-		}
-		if (animeFav.equalsIgnoreCase("Gundam")) {
-			animeFavAcumulado = true;
-		}
-		if ((añosAcumulados == true) && (animeFavAcumulado == true)) {
-			acumulacionFinal = true;
-		}
 
 		System.out.println(acumulacionFinal);
 
