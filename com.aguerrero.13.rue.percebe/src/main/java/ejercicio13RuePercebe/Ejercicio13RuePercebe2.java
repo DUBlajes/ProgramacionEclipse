@@ -1,7 +1,11 @@
 package ejercicio13RuePercebe;
 
 import java.util.Scanner;
-
+/**
+ * Método principal del programa. Te pide un número de plantas y un número de casas por planta y las imprime por pantalla según el número que hayas introducido por consola.
+ * @author Álvaro Guerrero
+ *
+ */
 public class Ejercicio13RuePercebe2 {
 
 	public static void main(String[] args) {

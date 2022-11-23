@@ -1,7 +1,6 @@
 package ejercicio13RuePercebe;
 
 import java.util.Scanner;
-
 public class Ejercicio13RuePercebe {
 
 	public static void main(String[] args) {
