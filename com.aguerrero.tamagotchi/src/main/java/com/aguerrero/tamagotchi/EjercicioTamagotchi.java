@@ -1,7 +1,11 @@
 package com.aguerrero.tamagotchi;
 
 import java.util.Scanner;
-
+/**
+ * Método principal del programa. Te pide un número de plantas y un número de casas por planta y las imprime por pantalla según el número que hayas introducido por consola.
+ * @author Álvaro Guerrero
+ *
+ */
 public class EjercicioTamagotchi {
 
 	public static void main(String[] args) {

@@ -7,7 +7,11 @@ import java.util.Scanner;
  *
  */
 public class Ejercicio13RuePercebe2 {
-
+/**
+ * 
+ * @param args
+ * 
+ */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 /**
