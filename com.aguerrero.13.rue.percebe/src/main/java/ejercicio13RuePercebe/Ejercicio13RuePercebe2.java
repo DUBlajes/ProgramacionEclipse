@@ -3,15 +3,16 @@ package ejercicio13RuePercebe;
 import java.util.Scanner;
 
 /**
- * Método principal del programa. Te pide un número de plantas y un número de
- * casas por planta y las imprime por pantalla según el número que hayas
- * introducido por consola.
  * 
+ * Clase que recoge al main del programa.
  * @author Álvaro Guerrero
  *
  */
 public class Ejercicio13RuePercebe2 {
 	/**
+	 * Método principal del programa. Te pide un número de plantas y un número de
+	 * casas por planta y las imprime por pantalla según el número que hayas
+	 * introducido por consola.
 	 * 
 	 * @param args De momento, sin valor
 	 * 

@@ -3,17 +3,17 @@ package com.aguerrero.tamagotchi;
 import java.util.Scanner;
 
 /**
- * Método principal del programa. El usuario elige una raza para el tamagotchi,
- * le da un nombre y juega con él, intentando que sobreviva hasta un máximo de
- * 30 turnos. Podrá darle de comer, lavarlo, jugar y hacer que duerma. Además,
- * si es un perro, podrá sacarlo a pasear y, si es un carpincho, hacer que tome
- * mate.
+ * Método principal del programa.
  * 
  * @author Álvaro Guerrero
  *
  */
 public class EjercicioTamagotchi {
 	/**
+	 * El usuario elige una raza para el tamagotchi, le da un nombre y juega con él,
+	 * intentando que sobreviva hasta un máximo de 30 turnos. Podrá darle de comer,
+	 * lavarlo, jugar y hacer que duerma. Además, si es un perro, podrá sacarlo a
+	 * pasear y, si es un carpincho, hacer que tome mate.
 	 * 
 	 * @param args De momento, sin uso
 	 */

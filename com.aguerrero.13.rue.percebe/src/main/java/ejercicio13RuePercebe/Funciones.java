@@ -2,14 +2,15 @@ package ejercicio13RuePercebe;
 
 /**
  * Clase con una función auxiliar para el ejercicio de 13 Rue del Percebe, para
- * evitar repetir código en el main. Esta función de tipo String se encargará en
- * el main de devolver un dibujo (en forma de String) el número de veces que el
- * usuario haya introducido por consola.
+ * evitar repetir código en el main.
  * 
  * @author Álvaro Guerrero
  */
 public class Funciones {
 	/**
+	 * Esta función de tipo String se encargará en el main de devolver un dibujo (en
+	 * forma de String) el número de veces que el usuario haya introducido por
+	 * consola.
 	 * 
 	 * @param dibujo String que tomará en el main el valor del String que le
 	 *               introduzcamos
