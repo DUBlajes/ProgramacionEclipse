@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.aguerrero.tamagotchi","l":"EjercicioTamagotchi"},{"p":"com.aguerrero.tamagotchi","l":"Enterrar"},{"p":"com.aguerrero.tamagotchi","l":"ImprimirMenu"}];updateSearchResults();

@@ -1,13 +1,22 @@
 package com.aguerrero.tamagotchi;
 
 import java.util.Scanner;
+
 /**
- * Método principal del programa. Te pide un número de plantas y un número de casas por planta y las imprime por pantalla según el número que hayas introducido por consola.
+ * Método principal del programa. El usuario elige una raza para el tamagotchi,
+ * le da un nombre y juega con él, intentando que sobreviva hasta un máximo de
+ * 30 turnos. Podrá darle de comer, lavarlo, jugar y hacer que duerma. Además,
+ * si es un perro, podrá sacarlo a pasear y, si es un carpincho, hacer que tome
+ * mate.
+ * 
  * @author Álvaro Guerrero
  *
  */
 public class EjercicioTamagotchi {
-
+	/**
+	 * 
+	 * @param args De momento, sin uso
+	 */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String raza = "";
@@ -23,6 +32,11 @@ public class EjercicioTamagotchi {
 		byte tomarMate = 50;
 		String accion = "";
 		byte partida = 0;
+		/*
+		 * En esta parte del código, el usuario elige la raza del tamagotchi. Este
+		 * do-while se encarga de que el usuario permanezca en ese "menú" siempre que
+		 * elija una raza distinta a las 4 disponibles.
+		 */
 		do {
 			System.out.println("Dime de qué raza quieres que sea el tamagotchi:" + "\n\tPerro" + "\n\tGato"
 					+ "\n\tHipopótamo" + "\n\tCarpincho");
@@ -65,6 +79,11 @@ public class EjercicioTamagotchi {
 			}
 		} while (razaExiste == false);
 		System.out.println("Has elegido que el tamagotchi sea de raza " + raza);
+		/*
+		 * Este do while impide que el usuario introduzca cualquier número en el nombre
+		 * del tamagotchi. Si lo hace, el menú le seguirá diciendo que introduzca un
+		 * nombre.
+		 */
 		do {
 			System.out.println("Ahora dime su nombre");
 			nombre = sc.nextLine();
@@ -88,6 +107,12 @@ public class EjercicioTamagotchi {
 					+ diversion + "\nTomar mate: " + tomarMate);
 		}
 		System.out.println();
+		/*
+		 * Este do-while se encarga de que el usuario siga viendo el menú para elegir
+		 * acciones mientras el tamagotchi siga vivo. En este caso, siempre que
+		 * cualquiera de sus estadísticas sea mayor que 0 o que no hayan pasado 30
+		 * turnos.
+		 */
 		do {
 			System.out.println(ImprimirMenu.imprimirMenu());
 
@@ -98,6 +123,10 @@ public class EjercicioTamagotchi {
 				System.out.println("\t5 - Tomar mate");
 			}
 			accion = sc.nextLine();
+			/**
+			 * Este switch es el encargado de que las distintas estadísticas suban o bajen
+			 * en función de la acción elegida por el usuario.
+			 */
 			switch (accion) {
 			case "1":
 				hambre += 20;
