@@ -32,7 +32,7 @@ public class EjercicioTamagotchi {
 		byte tomarMate = 50;
 		String accion = "";
 		byte partida = 0;
-		/*
+		/**
 		 * En esta parte del código, el usuario elige la raza del tamagotchi. Este
 		 * do-while se encarga de que el usuario permanezca en ese "menú" siempre que
 		 * elija una raza distinta a las 4 disponibles.
@@ -237,10 +237,10 @@ public class EjercicioTamagotchi {
 		} while ((hambre > 0) && (sueño > 0) && (higiene > 0) && (diversion > 0) && (paseo > 0) && (tomarMate > 0)
 				&& (partida < 30));
 		if (hambre < 1 || sueño < 1 || higiene < 1 || diversion < 1 || paseo < 1 || tomarMate < 1) {
-			System.out.println(Enterrar.Enterrar(nombre, raza, partida));
+			System.out.println(Enterrar.enterrar(nombre, raza, partida));
 		}
 		if (partida == 30) {
-			System.out.println(Enterrar.Enterrar(nombre, raza, partida));
+			System.out.println(Enterrar.enterrar(nombre, raza, partida));
 		}
 
 	}

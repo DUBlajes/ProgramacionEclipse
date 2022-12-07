@@ -24,10 +24,24 @@ public class Enterrar {
 	 *                el tamagotchi en el main para mostrarlo en la lápida
 	 * @return String, String, byte
 	 */
-	public static String Enterrar(String nombre, String raza, byte partida) {
-		String fraseGraciosa = "";
+	public static String enterrar(String nombre, String raza, byte partida) {
+		String ret="";
+		String fraseGraciosa = " ";
 		Random rand = new Random();
 		int casos = rand.nextInt(1, 5);
+		String dep="D.E.P";
+		String nTurnos="Vivió "+partida+" turnos";
+		String nombreRaza=nombre+" el "+raza;
+		short longitudMaxima=(short)dep.length();
+		if(longitudMaxima<nTurnos.length()) {
+			longitudMaxima=(short)nTurnos.length();
+		}
+		if(longitudMaxima<fraseGraciosa.length()) {
+			longitudMaxima=(short)fraseGraciosa.length();
+		}
+		if(longitudMaxima<nombreRaza.length()) {
+			longitudMaxima=(short)nombreRaza.length();
+		}
 		switch (casos) {
 		case 1:
 			fraseGraciosa = "Se ha morido";
@@ -42,21 +56,22 @@ public class Enterrar {
 			fraseGraciosa = "Viaja hacia las estrellas";
 			break;
 		}
-		return (" __________________________________________________"
-
-				+ "\n|\\_________________________________________________\\"
-
-				+ "\n| |D.E.P                                           |"
-
-				+ "\n| |" + nombre + " el " + raza + "                                  |"
-
-				+ "\n| |" + fraseGraciosa + "                             |"
-
-				+ "\n| |Vivió " + partida + " turnos                                |"
-
-				+ "\n| |                                               |"
-
-				+ "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		for(short i=0;i<longitudMaxima+3;i++) {
+			ret+="_";
+		}
+		ret+="\n|\\";
+		for(short i=0;i<longitudMaxima+2;i++) {
+			ret+="_";
+		}
+		ret+="\\\n||";
+		for(short i=0;i<(longitudMaxima+2)/2;i++) {
+			ret+=" ";
+		}
+		ret+=dep;
+		for(short i=0;i<(longitudMaxima+2-dep.length()/2)/2-1;i++) {
+			ret+=" ";
+		}
+		return nombreRaza;
 
 	}
 
