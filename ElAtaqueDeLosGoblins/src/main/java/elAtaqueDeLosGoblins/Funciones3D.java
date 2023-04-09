@@ -20,7 +20,7 @@ public class Funciones3D {
 		for (int i = 0; i < tablero.length; i++) {
 			for (int j = 0; j < tablero.length; j++) {
 				for (int k = 0; k < tablero.length; k++) {
-					tablero[i][j][k] = "#";
+					tablero[i][j][k] = "♒";
 				}
 			}
 
