@@ -8,5 +8,9 @@ CREATE TABLE Amenazas (
     InternaOExterna boolean
 );
 
+ALTER TABLE Amenazas
+ADD NumeroCartas int,
+ADD DadoDesactivacion int;
+
 INSERT INTO Amenazas
 VALUES (value1, value2, value3, ...);
