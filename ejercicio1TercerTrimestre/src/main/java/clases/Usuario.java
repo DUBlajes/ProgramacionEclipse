@@ -1,6 +1,5 @@
 package clases;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,33 +26,36 @@ public class Usuario {
 		columnas.put("nick", nick);
 		DAO.insert("user", columnas);
 	}
+	
+	public Usuario() {
+		
+	}
 
 	public Usuario(String email, String pass) throws UsuarioNoExisteException, PassInvalidaException, SQLException {
-		LinkedHashSet columnasSacar=new LinkedHashSet<String>();
+		LinkedHashSet columnasSacar = new LinkedHashSet<String>();
 		columnasSacar.add("email");
-		columnasSacar.add("pass");
 		columnasSacar.add("nick");
-		HashMap<String,Object> restricciones=new HashMap<String,Object>();
+		columnasSacar.add("pass");
+		HashMap<String, Object> restricciones = new HashMap<String, Object>();
 		restricciones.put("email", email);
-		restricciones.put("pass", pass);
-		ArrayList<Object> resultadoConsulta=null;
-		String passN=null;
+		ArrayList<Object> resultadoConsulta = null;
+		String passN = null;
 		try {
-			resultadoConsulta=DAO.consultar("user", columnasSacar, restricciones);
-			if(resultadoConsulta.isEmpty()) {
+			resultadoConsulta = DAO.consultar("user", columnasSacar, restricciones);
+			if (resultadoConsulta.isEmpty()) {
 				throw new UsuarioNoExisteException("El usuario introducido no existe");
-			}else {
-				passN= ""+resultadoConsulta.get(1); //Se ponen las comillas para que si pones una pass numerica se pueda convertir a string
+			} else {
+				passN = "" + resultadoConsulta.get(1); // Se ponen las comillas para que si pones una pass numerica se
+														// pueda convertir a string
 				if (!passN.equals(pass)) {
 					throw new PassInvalidaException("La contraseña introducida no es válida");
-					
 				}
 			}
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());		
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
-		this.email=(String)resultadoConsulta.get(0);
-		this.nick=(String)resultadoConsulta.get(2);
+		this.email = (String) resultadoConsulta.get(0);
+		this.nick = (String) resultadoConsulta.get(2);
 
 	}
 
@@ -98,7 +100,7 @@ public class Usuario {
 		HashMap<String, Object> restriccionesMod = new HashMap<String, Object>();
 		System.out.println("Dime el nuevo nick");
 		valoresNuevos.put("nick", sc.nextLine());
-		restriccionesMod.put("nick", nick);
+		restriccionesMod.put("user", email);
 		try {
 			DAO.actualizar("user", valoresNuevos, restriccionesMod);
 		} catch (SQLException e2) {
@@ -117,9 +119,35 @@ public class Usuario {
 		this.pass = pass;
 	}
 
+
+	public static ArrayList<Usuario> getTodos(){
+		ArrayList<Usuario> todosLosUsuarios = new ArrayList<Usuario>();
+		Usuario todos=new Usuario();
+		try {
+			LinkedHashSet columnasSacar = new LinkedHashSet<String>();
+			columnasSacar.add("email");
+			columnasSacar.add("nick");
+			HashMap<String, Object> restricciones = new HashMap<String, Object>(); // Si lo dejo vacio me lo va
+																					// a mostrar todo
+			todosLosUsuarios= DAO.consultar("user", columnasSacar, restricciones);
+			for (byte i = 0; i < todosLosUsuarios.size(); i++) {
+				System.out.println(todosLosUsuarios.get(i) + " : ");
+			}
+			System.out.println();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return todosLosUsuarios;
+		
+	}
+
+
 	@Override
 	public String toString() {
-		return "email: " + email + ", nick: " + nick + ", pass: " + pass + "]";
+		return "Usuario:"
+				+ "\n\tEmail: " + email + 
+				"\n\tNick: " + nick;
 	}
 
 }

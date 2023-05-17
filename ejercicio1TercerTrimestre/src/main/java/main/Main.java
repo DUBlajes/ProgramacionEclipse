@@ -30,10 +30,14 @@ public class Main {
 		String email;
 		String nick;
 		String pass;
+		boolean loginCorrecto = false;
 		do {
 
 			System.out.println(
 					"¿Qué quieres hacer?\n\t0 - Salir" + "\n\t1 - Registro" + "\n\t2 - Login" + "\n\t3 - Ver log");
+			if(loginCorrecto==true) {
+				System.out.println("\t4 - Ver todos los usuarios");
+			}
 			opcion = Byte.parseByte(sc.nextLine());
 			switch (opcion) {
 			case 1:
@@ -67,33 +71,32 @@ public class Main {
 				break;
 
 			case 2:
-				boolean loginCorrecto = false;
+				loginCorrecto = false;
 				do {
 					System.out.println("Dime tu email");
 					email = sc.nextLine();
-					System.out.println("Dime tu pass");
+					System.out.println("Dime tu contraseña");
 					pass = sc.nextLine();
 					try {
 						usuario = new Usuario(email, pass);
-						System.out.println("Usuario logueado con éxito.");
+						System.out.println("Usuario logueado con éxito");
+						FileWriter fw = new FileWriter("./usuarios.log", true);
+						fw.write("Usuario " + usuario.getEmail() + " logueado con éxito en: "
+								+ LocalDateTime.now().toString() + "\n");
+						fw.flush();
+						fw.close();
 						loginCorrecto = true;
-						// Escribir en el fichero "usuarios.log"
-						try (FileWriter escritor = new FileWriter("./usuarios.log", true)) {
-							String logEntry = "Usuario " + usuario.getEmail() + " logueado con éxito en: "
-									+ LocalDateTime.now().toString() + "\n";
-							escritor.write(logEntry);
-							escritor.flush();
-							escritor.close();
-							System.out.println("Registro escrito en el archivo 'usuarios.log'.");
-						} catch (IOException e) {
-							System.out.println("Error al escribir en el archivo 'usuarios.log'.");
-						}
-					} catch (PassInvalidaException | UsuarioNoExisteException | SQLException e) {
-						System.out.println("Error al registrar usuario: " + e.getMessage());
+					} catch (UsuarioNoExisteException | PassInvalidaException e) {
+						System.out.println("Se ha producido un error en el logueo de usuario: " + e.getMessage());
 						loginCorrecto = false;
+					} catch (IOException e) {
+						System.out.println("Se ha producido un error: " + e.getMessage());
+						loginCorrecto = false;
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} while (!loginCorrecto);
-
+				} while (loginCorrecto == false);
 				break;
 
 			case 3:
@@ -114,6 +117,12 @@ public class Main {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				break;
+				
+			case 4:
+				
+				Usuario.getTodos();
+
 				break;
 			}
 		} while (opcion != 0);
