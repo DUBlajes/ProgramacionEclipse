@@ -120,8 +120,18 @@ public class Main {
 				break;
 				
 			case 4:
+				if(loginCorrecto==false) {
+					System.out.println("Usuario no logueado");
+				}else {
+					try {
+						Usuario.getTodos();
+						System.out.println(Usuario.getTodos());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				
-				Usuario.getTodos();
 
 				break;
 			}

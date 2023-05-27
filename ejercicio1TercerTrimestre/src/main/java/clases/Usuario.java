@@ -14,6 +14,7 @@ public class Usuario {
 	private String email;
 	private String nick;
 	private String pass;
+	private boolean usuarionuevo;
 
 	public Usuario(String email, String nick, String pass) throws SQLException {
 		super();
@@ -25,11 +26,19 @@ public class Usuario {
 		columnas.put("pass", pass);
 		columnas.put("nick", nick);
 		DAO.insert("user", columnas);
-	}
-	
-	public Usuario() {
 		
 	}
+	
+
+
+	public Usuario(String email, String nick, boolean usuarionuevo) {
+		super();
+		this.email = email;
+		this.nick = nick;
+		this.usuarionuevo = usuarionuevo;
+	}
+
+
 
 	public Usuario(String email, String pass) throws UsuarioNoExisteException, PassInvalidaException, SQLException {
 		LinkedHashSet columnasSacar = new LinkedHashSet<String>();
@@ -45,7 +54,7 @@ public class Usuario {
 			if (resultadoConsulta.isEmpty()) {
 				throw new UsuarioNoExisteException("El usuario introducido no existe");
 			} else {
-				passN = "" + resultadoConsulta.get(1); // Se ponen las comillas para que si pones una pass numerica se
+				passN = "" + resultadoConsulta.get(2); // Se ponen las comillas para que si pones una pass numerica se
 														// pueda convertir a string
 				if (!passN.equals(pass)) {
 					throw new PassInvalidaException("La contraseña introducida no es válida");
@@ -119,26 +128,21 @@ public class Usuario {
 		this.pass = pass;
 	}
 
-
-	public static ArrayList<Usuario> getTodos(){
-		ArrayList<Usuario> todosLosUsuarios = new ArrayList<Usuario>();
-		Usuario todos=new Usuario();
-		try {
-			LinkedHashSet columnasSacar = new LinkedHashSet<String>();
-			columnasSacar.add("email");
-			columnasSacar.add("nick");
-			HashMap<String, Object> restricciones = new HashMap<String, Object>(); // Si lo dejo vacio me lo va
-																					// a mostrar todo
-			todosLosUsuarios= DAO.consultar("user", columnasSacar, restricciones);
-			for (byte i = 0; i < todosLosUsuarios.size(); i++) {
-				System.out.println(todosLosUsuarios.get(i) + " : ");
-			}
-			System.out.println();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	
+	public static ArrayList<Usuario> getTodos() throws SQLException {
+		LinkedHashSet<String> columnasSacar = new LinkedHashSet<>();
+		columnasSacar.add("email");
+		columnasSacar.add("nick");
+		HashMap<String, Object> restricciones = new HashMap<>();
+		ArrayList<Usuario> usuarios = new ArrayList<>();
+		ArrayList<Object> listaUsuarios = new ArrayList<>();
+		listaUsuarios = DAO.consultar("user", columnasSacar, restricciones);
+		for (int i = 0; i < listaUsuarios.size(); i += 2) {
+			Usuario cliente = new Usuario((String) listaUsuarios.get(i), (String) listaUsuarios.get(i + 1),
+					false);
+			usuarios.add(cliente);
 		}
-		return todosLosUsuarios;
+		return usuarios;
 		
 	}
 
