@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
+import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import clases.Dado;
 import clases.DadoTripulacion;
 import utils.DAO;
@@ -12,47 +18,42 @@ import utils.DAO;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		DadoTripulacion dado=new DadoTripulacion("Dado Tripulacion");
-		byte tirada= dado.tirarDado();
-		System.out.println("El dado ha sacado un: "+tirada);
-		
-		try {
-			LinkedHashSet columnasSacar = new LinkedHashSet<String>();
-			columnasSacar.add("Nombre");
-			columnasSacar.add("ValorAmenaza");
-			columnasSacar.add("DadoActivacion");
-			columnasSacar.add("AccionQueRealiza");
-			columnasSacar.add("InternaOExterna");
-			columnasSacar.add("NumeroCartas");
-			columnasSacar.add("DadoDesactivacion");
-			HashMap<String, Object> restricciones = new HashMap<String, Object>(); // Si lo dejo vacio me lo va
-																					// a mostrar todo
-			ArrayList<Object> cliente = DAO.consultar("amenazas", columnasSacar, restricciones);
-			for (int i = 0; i < cliente.size(); i++) {
-				System.out.println(cliente.get(i) + " : ");
-			}
-			System.out.println();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			LinkedHashSet columnasSacar = new LinkedHashSet<String>();
-			columnasSacar.add("Funcion");
-			HashMap<String, Object> restricciones = new HashMap<String, Object>(); // Si lo dejo vacio me lo va
-																					// a mostrar todo
-			ArrayList<Object> cliente = DAO.consultar("AccionQueRealiza", columnasSacar, restricciones);
-			for (int i = 0; i < cliente.size(); i++) {
-				System.out.println(cliente.get(i) + " : ");
-			}
-			System.out.println();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		try {	
+			BufferedImage imagen=ImageIO.read(new File("./images/tableroJuego.jpg"));
+			for (short i = 0; i < imagen.getWidth(); i++) { //Para recorrer las columnas, de 0 a la anchura
+				for (short j = 0; j < imagen.getHeight(); j++){
+					imagen.setRGB(i, j, imagen.getRGB(i, j)&Integer.parseInt("FFFF00",16));
+				}
+				}
+			
+			ImageIO.write(imagen, "jpg", new File("./images/resultado.jpg"));
+			
+			
+			
+		/* TODO ESTO PARA METER COLORCITOS
+		 * BufferedImage imagen=new BufferedImage(800,600,BufferedImage.TYPE_INT_RGB); //Solo sirve para imagenes por pixeles. Matriz a la que le decimos largo por alto
 
+		float contadorRojo=0;
+		float contadorAzul=0;
+		float contadorVerde=0;
+				for (short i = 0; i < imagen.getWidth(); i++) { //Para recorrer las columnas, de 0 a la anchura
+			for (short j = 0; j < imagen.getHeight(); j++) {//Para recorrer las filas, de 0 a la altura
+				String colorEscogido=String.format("%02X",(int)contadorRojo);
+				colorEscogido+=String.format("%02X",(int)contadorAzul);
+				colorEscogido+=String.format("%02X",(int)contadorVerde);
+				imagen.setRGB(i, j, Integer.parseInt(colorEscogido,16));
+				contadorRojo=(contadorRojo+(255f/imagen.getHeight()))%255;
+			}
+			contadorVerde=(contadorVerde+(255f/imagen.getHeight()))%255;
+		}
+				ImageIO.write(imagen,"JPG",new File("./images/Tablero.jpg")); //Con esto te crea el archivo. DEBE ESTAR AL FINAL DEL TODO*/
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("hecho");
+		
+		
 	}
 
 }
