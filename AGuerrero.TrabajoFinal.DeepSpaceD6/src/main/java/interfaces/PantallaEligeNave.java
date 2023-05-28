@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import javax.swing.JOptionPane;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -14,6 +14,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class PantallaEligeNave extends JPanel {
 	private Ventana ventana;
@@ -23,22 +26,40 @@ public class PantallaEligeNave extends JPanel {
 		setLayout(null);
 		
 		JButton botonNave1 = new JButton("Elige esta nave");
+		botonNave1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		botonNave1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventana.cambiarAPantalla(TableroDeJuego.class);
+			}
+		});
 		botonNave1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		botonNave1.setBounds(204, 575, 89, 23);
+		botonNave1.setBounds(283, 679, 182, 55);
 		add(botonNave1);
 		
 		JLabel labelNave1 = new JLabel("");
-		labelNave1.setIcon(new ImageIcon("F:\\FP\\CENEC\\1er año\\Programacion\\Nuevos Workspaces\\ProgramacionEclipse\\AGuerrero.TrabajoFinal.DeepSpaceD6\\images\\nave1.jpg"));
-		labelNave1.setBounds(10, 0, 478, 640);
+		labelNave1.setIcon(new ImageIcon("D:\\Repositorios CENEC\\Programacion\\Workspaces nuevos\\ProgramacionEclipse\\AGuerrero.TrabajoFinal.DeepSpaceD6\\images\\nave1.jpg"));
+		labelNave1.setBounds(145, 29, 478, 640);
 		add(labelNave1);
 		
 		JLabel labelNave2 = new JLabel("");
-		labelNave2.setIcon(new ImageIcon("F:\\FP\\CENEC\\1er año\\Programacion\\Nuevos Workspaces\\ProgramacionEclipse\\AGuerrero.TrabajoFinal.DeepSpaceD6\\images\\nave2.jpg"));
-		labelNave2.setBounds(641, 11, 496, 628);
+		labelNave2.setIcon(new ImageIcon("D:\\Repositorios CENEC\\Programacion\\Workspaces nuevos\\ProgramacionEclipse\\AGuerrero.TrabajoFinal.DeepSpaceD6\\images\\nave2.jpg"));
+		labelNave2.setBounds(715, 29, 504, 640);
 		add(labelNave2);
+		
+		JButton botonNave1_1 = new JButton("Elige esta nave");
+		botonNave1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(null, "Nave disponible próximamente","Nave no disponible", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		botonNave1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		botonNave1_1.setBounds(876, 679, 182, 55);
+		add(botonNave1_1);
 	}
 	
 	

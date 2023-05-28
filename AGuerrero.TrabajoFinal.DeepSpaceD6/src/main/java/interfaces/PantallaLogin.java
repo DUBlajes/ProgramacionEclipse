@@ -89,7 +89,7 @@ public class PantallaLogin extends JPanel {
 		JLabel labelImage = new JLabel("");
 		try {
 			BufferedImage imagen=ImageIO.read(new File(".\\images\\icono.jpg"));
-			Image enIcono=imagen.getScaledInstance(256, 256, Image.SCALE_SMOOTH);
+			Image enIcono=imagen.getScaledInstance(256, 256, Image.SCALE_DEFAULT);
 			labelImage.setIcon(new ImageIcon(enIcono));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
