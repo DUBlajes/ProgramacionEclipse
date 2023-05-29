@@ -19,11 +19,6 @@ public class Jugador extends ElementoConNombre implements AccionesJugador {
 	}
 
 	@Override
-	public byte tirarDadoTripulante() {
-		return DadoTripulacion.tirarDado();
-	}
-
-	@Override
 	public void sacarCarta() {
 		try {
 			LinkedHashSet columnasSacar = new LinkedHashSet<String>();
@@ -49,8 +44,9 @@ public class Jugador extends ElementoConNombre implements AccionesJugador {
 	}
 
 	@Override
-	public byte tirarDadoAmenaza() {
-		return DadoAmenaza.tirarDado();
+	public void tirarDadoAmenaza() {
+		DadoAmenaza dadoAmenaza = new DadoAmenaza(null);
+        int resultado = dadoAmenaza.lanzarDado();
 	}
 
 	@Override
@@ -75,6 +71,12 @@ public class Jugador extends ElementoConNombre implements AccionesJugador {
 	public void noAsignar() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void tirarDadoTripulante() {
+		DadoTripulacion dadoTripulante = new DadoTripulacion(null);
+        int[] resultados = dadoTripulante.lanzarDados();
 	}
 	 
 	 

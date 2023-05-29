@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 
 import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,8 +24,6 @@ public class Main {
 		
 		Ventana v=new Ventana();
 
-		
-		
 		
 		/*try {
 			BufferedImage imagen = ImageIO.read(new File("./images/tableroJuego.jpg"));

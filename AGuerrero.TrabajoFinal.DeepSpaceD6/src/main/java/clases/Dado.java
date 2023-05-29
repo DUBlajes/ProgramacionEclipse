@@ -1,16 +1,20 @@
 package clases;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public abstract class Dado extends ElementoConNombre{
-	
+public class Dado extends ElementoConNombre{
+    private Random random;
+
+
 	public Dado(String nombre) {
 		super(nombre);
-		// TODO Auto-generated constructor stub
-	}
-
-	public static byte tirarDado() {
-        Random r = new Random();
-        return (byte) r.nextInt(1,7);
+		random = new Random();
+    }
+    
+    public int lanzar() {
+        return random.nextInt(6) + 1;
     }
 }
+

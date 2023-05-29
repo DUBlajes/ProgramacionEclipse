@@ -43,10 +43,10 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 		return "Puntos de Escudo: " + puntosEscudo + "\nPuntos de vida: " + puntosVida;
 	}
 
-	@Override
+	/*@Override
 	public byte tirarDadoDeNuevo() {
-		return DadoTripulacion.tirarDado();
-	}
+		
+	}*/
 
 	@Override
 	public byte atacar() {
@@ -108,6 +108,12 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 	public void bloquearAmenaza() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public byte tirarDadoDeNuevo() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

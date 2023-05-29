@@ -3,7 +3,7 @@ package interfaces;
 public interface AccionesJugador {
 
 	//Tirar dados tripulante
-	public byte tirarDadoTripulante();
+	public void tirarDadoTripulante();
 	
 	//Asignar dados tripulante
 		public void asignarTripulacion();
@@ -20,5 +20,5 @@ public interface AccionesJugador {
 	public void noAsignar();
 	
 	//Tirar dado amenaza
-	public byte tirarDadoAmenaza();
+	public void tirarDadoAmenaza();
 }
