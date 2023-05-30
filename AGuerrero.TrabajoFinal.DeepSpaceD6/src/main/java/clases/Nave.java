@@ -6,12 +6,13 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 	private ZonasNave zonasDeLaNave;
 	private byte puntosEscudo;
 	private byte puntosVida;
+	private Dado dado;
 
 	public Nave(String nombre, ZonasNave zonasDeLaNave, byte puntosEscudo, byte puntosVida) {
 		super(nombre);
 		this.zonasDeLaNave = zonasDeLaNave;
-		this.puntosEscudo = 4;
-		this.puntosVida = 8;
+		this.puntosEscudo = puntosEscudo;
+		this.puntosVida = puntosVida;
 	}
 
 	public ZonasNave getZonasDeLaNave() {
@@ -43,10 +44,10 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 		return "Puntos de Escudo: " + puntosEscudo + "\nPuntos de vida: " + puntosVida;
 	}
 
-	/*@Override
+	@Override
 	public byte tirarDadoDeNuevo() {
-		
-	}*/
+		return (byte) dado.lanzar();
+	}
 
 	@Override
 	public byte atacar() {
@@ -71,25 +72,23 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 
 	@Override
 	public byte recargarEscudos() {
-		if (this.puntosEscudo >= 0 || this.puntosEscudo > 4) {
-			this.puntosEscudo = 4;
+		if (puntosEscudo >= 0 || puntosEscudo > 4) {
+			puntosEscudo = 4;
 		}
 
-		return this.puntosEscudo;
+		return puntosEscudo;
 	}
 
 	@Override
 	public byte reparacion() {
-		if (this.puntosVida > 8) {
-			this.puntosVida = 8;
+		if (puntosVida >= 8) {
+			puntosVida = 8;
 		} else {
-			this.puntosVida = (byte) (this.puntosVida + 1);
+			puntosVida = (byte) (puntosVida + 1);
 			// Meter condición de que si se añade otro dado, ataquehecho aumenta en 2 puntos
-			if (DadoTripulacion.class != null) // Ojo que esto no es así del todo
-				this.puntosVida += 2;
 		}
 
-		return this.puntosVida;
+		return puntosVida;
 	}
 
 	@Override
@@ -110,10 +109,5 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 
 	}
 
-	@Override
-	public byte tirarDadoDeNuevo() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }

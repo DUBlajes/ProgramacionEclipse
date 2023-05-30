@@ -41,12 +41,12 @@ public class PantallaEligeNave extends JPanel {
 		add(botonNave1);
 		
 		JLabel labelNave1 = new JLabel("");
-		labelNave1.setIcon(new ImageIcon("D:\\Repositorios CENEC\\Programacion\\Workspaces nuevos\\ProgramacionEclipse\\AGuerrero.TrabajoFinal.DeepSpaceD6\\images\\nave1.jpg"));
+		labelNave1.setIcon(new ImageIcon(".\\images\\nave1.jpg"));
 		labelNave1.setBounds(145, 29, 478, 640);
 		add(labelNave1);
 		
 		JLabel labelNave2 = new JLabel("");
-		labelNave2.setIcon(new ImageIcon("D:\\Repositorios CENEC\\Programacion\\Workspaces nuevos\\ProgramacionEclipse\\AGuerrero.TrabajoFinal.DeepSpaceD6\\images\\nave2.jpg"));
+		labelNave2.setIcon(new ImageIcon(".\\images\\nave2.jpg"));
 		labelNave2.setBounds(715, 29, 504, 640);
 		add(labelNave2);
 		

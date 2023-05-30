@@ -7,6 +7,12 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -15,6 +21,9 @@ import javax.swing.border.LineBorder;
 
 import clases.DadoAmenaza;
 import clases.DadoTripulacion;
+import clases.Nave;
+import clases.ZCabina;
+import clases.ZonasNave;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -23,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTextArea;
 
 public class TableroDeJuego extends JPanel {
 	private Ventana ventana;
@@ -44,13 +54,25 @@ public class TableroDeJuego extends JPanel {
 	private JButton botonAsignar5;
 	private JButton botonSacarCarta;
 	private JButton botonVolver;
-	
-	
+	private JTextArea textoCartas;
+	private Nave nave;
+	private ZonasNave zonasNave;
+	private JTextArea textoZona1;
+	private JTextArea textoZona2;
+	private JTextArea textoZona3;
+	private JTextArea textoZona4;
+	private JTextArea textoZona5;
 
 	public TableroDeJuego(Ventana v) {
+		Nave nave=new Nave("Nave 1", zonasNave, (byte)4, (byte)3);
 		this.ventana = v;
 		v.setSize(1440, 900);
 		setLayout(null);
+		
+		textoCartas = new JTextArea();
+		textoCartas.setBounds(51, 16, 271, 79);
+		textoCartas.setEditable(false);
+		add(textoCartas);
 
 		JPanel panelEnfermeria = new JPanel();
 		panelEnfermeria.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -144,7 +166,8 @@ public class TableroDeJuego extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int resultado = dadoAmenaza.lanzarDado();
-
+				String funcion= ("Dado de amenaza: ");
+				textoCartas.append(funcion+resultado);
 				// Utiliza el resultado obtenido de la tirada
 				System.out.println("Resultado: " + resultado);
 
@@ -153,42 +176,72 @@ public class TableroDeJuego extends JPanel {
 		botonAmenaza.setForeground(new Color(0, 0, 0));
 		botonAmenaza.setBounds(21, 480, 70, 70);
 		panelAcciones.add(botonAmenaza);
-		
+
 		botonAsignar1 = new JButton("Asignar a zona 1");
+		botonAsignar1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//nave.tirarDadoDeNuevo();
+				String resultado= ("\nTira de nuevo los dados");
+				textoZona1.append(resultado);
+			}
+		});
 		botonAsignar1.setVisible(false);
 		botonAsignar1.setBounds(66, 106, 133, 45);
 		panelAcciones.add(botonAsignar1);
-		
+
 		botonAsignar2 = new JButton("Asignar a zona 2");
 		botonAsignar2.setVisible(false);
 		botonAsignar2.setBounds(66, 174, 133, 45);
 		panelAcciones.add(botonAsignar2);
-		
+
 		botonAsignar3 = new JButton("Asignar a zona 3");
+		botonAsignar3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//nave.recuperarBloqueados();
+				//nave.recuperarEnfermos();
+				String resultado= ("\nDados bloqueados"+ "\ny enfermos recuperados");
+				textoZona3.append(resultado + "\n");
+			}
+		});
 		botonAsignar3.setVisible(false);
 		botonAsignar3.setBounds(66, 240, 133, 45);
 		panelAcciones.add(botonAsignar3);
-		
+
 		botonAsignar4 = new JButton("Asignar a zona 4");
+		botonAsignar4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nave.recargarEscudos();
+				String resultado= ("\nEscudos recargados."+ "\nPuntos de escudo: ");
+				textoZona4.append(resultado + nave.getPuntosEscudo());
+				
+			}
+		});
 		botonAsignar4.setVisible(false);
 		botonAsignar4.setBounds(66, 295, 133, 45);
 		panelAcciones.add(botonAsignar4);
-		
+
 		botonAsignar5 = new JButton("Asignar a zona 5");
+		botonAsignar5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nave.reparacion();
+				String resultado= ("\nVida recuperada en 1 punto."+"\nTotal de puntos de vida: ");
+				textoZona5.append(resultado + "\n"+nave.getPuntosVida());
+			}
+		});
 		botonAsignar5.setVisible(false);
 		botonAsignar5.setBounds(66, 370, 133, 45);
 		panelAcciones.add(botonAsignar5);
-		
+
 		botonSacarCarta = new JButton("Sacar carta Amenaza");
 		botonSacarCarta.setVisible(false);
 		botonSacarCarta.setBounds(134, 497, 133, 45);
 		panelAcciones.add(botonSacarCarta);
-		
+
 		botonPasarAAtaque = new JButton("Atacar");
 		botonPasarAAtaque.setBounds(118, 29, 133, 45);
 		botonPasarAAtaque.setVisible(false);
 		panelAcciones.add(botonPasarAAtaque);
-		
+
 		botonVolver = new JButton("Atrás");
 		botonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -208,8 +261,9 @@ public class TableroDeJuego extends JPanel {
 		botonVolver.setBounds(166, 552, 85, 21);
 		botonVolver.setVisible(false);
 		panelAcciones.add(botonVolver);
+
 		botonPasarAAtaque.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
+			public void actionPerformed(ActionEvent e) {
 				btnAtacar4.setVisible(true);
 				btnAtacar3.setVisible(true);
 				btnAtacar2.setVisible(true);
@@ -222,17 +276,56 @@ public class TableroDeJuego extends JPanel {
 				botonPasarAAtaque.setVisible(false);
 				botonSacarCarta.setVisible(false);
 				botonVolver.setVisible(true);
+				//nave.atacar();
+				
+				
 			}
 		});
 		botonSacarCarta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				botonAmenaza.setVisible(true);
+				try {
+					// Establecer conexión con la base de datos
+					Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/deepspaced6", "root",
+							"Gv3rr3r0160294!");
+
+					// Generar un número aleatorio entre 1 y 4
+					Random r=new Random();
+					byte numeroAleatorio = (byte) r.nextInt(22);
+
+					// Crear la sentencia SQL
+					String sql = "SELECT * FROM amenazas WHERE id = ?";
+
+					// Preparar la sentencia SQL
+					PreparedStatement statement = conn.prepareStatement(sql);
+					statement.setInt(1, numeroAleatorio);
+
+					// Ejecutar la consulta
+					ResultSet resultSet = statement.executeQuery();
+
+					// Obtener y mostrar los resultados en el JTextArea
+					textoCartas.setText("");
+					while (resultSet.next()) {
+						String colNombre=resultSet.getString("Nombre");
+						String colAmenaza=resultSet.getString("ValorAmenaza");
+						String colDadoActivacion = resultSet.getString("DadoActivacion");
+						String resultado=colNombre+"\nValor de Amenaza: "+colAmenaza+"\nDado Activación: "+colDadoActivacion;
+						textoCartas.append(resultado + "\n");
+					}
+
+					// Cerrar la conexión y liberar recursos
+					resultSet.close();
+					statement.close();
+					conn.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		botonAsignar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				botonPasarAAtaque.setVisible(true);
-				
+
 			}
 		});
 
@@ -242,34 +335,38 @@ public class TableroDeJuego extends JPanel {
 		panelAmenaza3.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelAmenaza3.setLayout(null);
 
-		JPanel panelZona1 = new JPanel();
-		panelZona1.setBounds(523, 128, 188, 90);
-		add(panelZona1);
-
-		JPanel panelZona2 = new JPanel();
-		panelZona2.setBounds(543, 242, 188, 90);
-		add(panelZona2);
-
-		JPanel panelZona3 = new JPanel();
-		panelZona3.setBounds(635, 370, 188, 90);
-		add(panelZona3);
-
-		JPanel panelZona4 = new JPanel();
-		panelZona4.setBounds(666, 512, 188, 90);
-		add(panelZona4);
-
-		JPanel panelZona5 = new JPanel();
-		panelZona5.setBounds(676, 621, 188, 90);
-		add(panelZona5);
+		tiradaDadosTripulantes = new JLabel("Resultados tiradas");
+		tiradaDadosTripulantes.setBounds(95, 127, 277, 45);
+		add(tiradaDadosTripulantes);
+		
+		textoCartas = new JTextArea();
+		textoCartas.setBounds(51, 16, 271, 79);
+		add(textoCartas);
+		
+		textoZona1 = new JTextArea();
+		textoZona1.setBounds(654, 273, 201, 73);
+		add(textoZona1);
+		
+		textoZona2 = new JTextArea();
+		textoZona2.setBounds(654, 370, 201, 73);
+		add(textoZona2);
+		
+		textoZona3 = new JTextArea();
+		textoZona3.setBounds(654, 454, 201, 73);
+		add(textoZona3);
+		
+		textoZona4 = new JTextArea();
+		textoZona4.setBounds(654, 547, 201, 73);
+		add(textoZona4);
+		
+		textoZona5 = new JTextArea();
+		textoZona5.setBounds(654, 631, 201, 73);
+		add(textoZona5);
 		JLabel labelTablero = new JLabel("");
 		labelTablero.setBorder(new LineBorder(new Color(0, 0, 0)));
 		labelTablero.setBounds(400, 16, 668, 751);
 		add(labelTablero);
 		setImageLabel(labelTablero, "./images/tableroJuego.jpg");
-
-		tiradaDadosTripulantes = new JLabel("Resultados tiradas");
-		tiradaDadosTripulantes.setBounds(10, 128, 127, 45);
-		add(tiradaDadosTripulantes);
 	}
 
 	private void setImageLabel(JLabel labelTablero, String raiz) {
