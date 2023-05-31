@@ -1,26 +1,29 @@
 package clases;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 import interfaces.FuncionesNave;
 
 public class Nave extends ElementoConNombre implements FuncionesNave {
-	private ZonasNave zonasDeLaNave;
+	private HashMap<String, ZonasNave> zonaNave;
 	private byte puntosEscudo;
 	private byte puntosVida;
 	private Dado dado;
 
-	public Nave(String nombre, ZonasNave zonasDeLaNave, byte puntosEscudo, byte puntosVida) {
+	public Nave(String nombre, HashMap<String, ZonasNave> zonasDeLaNave, byte puntosEscudo, byte puntosVida) {
 		super(nombre);
-		this.zonasDeLaNave = zonasDeLaNave;
-		this.puntosEscudo = puntosEscudo;
-		this.puntosVida = puntosVida;
+		setZonasDeLaNave(zonasDeLaNave);
+		setPuntosEscudo((byte) puntosEscudo);
+		setPuntosVida((byte) puntosVida);
 	}
 
-	public ZonasNave getZonasDeLaNave() {
-		return zonasDeLaNave;
+	public HashMap<String, ZonasNave> getZonasDeLaNave() {
+		return zonaNave;
 	}
 
-	public void setZonasDeLaNave(ZonasNave zonasDeLaNave) {
-		this.zonasDeLaNave = zonasDeLaNave;
+	public void setZonasDeLaNave(HashMap<String, ZonasNave> zonasDeLaNave) {
+		this.zonaNave = zonasDeLaNave;
 	}
 
 	public byte getPuntosEscudo() {
@@ -29,6 +32,9 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 
 	public void setPuntosEscudo(byte puntosEscudo) {
 		this.puntosEscudo = puntosEscudo;
+		if (this.puntosEscudo<=0) {
+			this.puntosEscudo=0;
+		}
 	}
 
 	public byte getPuntosVida() {
@@ -37,6 +43,9 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 
 	public void setPuntosVida(byte puntosVida) {
 		this.puntosVida = puntosVida;
+		if (this.puntosVida<=0) {
+			this.puntosVida=0;
+		}
 	}
 
 	@Override
@@ -53,8 +62,7 @@ public class Nave extends ElementoConNombre implements FuncionesNave {
 	public byte atacar() {
 		byte ataquehecho = (byte) 1;
 		// Meter condición de que si se añade otro dado, ataquehecho aumenta en 2 puntos
-		if (DadoTripulacion.class != null) // Ojo que esto no es así del todo
-			ataquehecho += 2;
+
 		return ataquehecho;
 	}
 

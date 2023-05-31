@@ -2,13 +2,13 @@ package interfaces;
 
 public interface AccionesCartas {
 	//Quitar x puntos de vida (primero ataca al escudo)
-	public byte atacar();
+	public void atacar();
 	
 	//Atacar al casco ignorando escudo
-	public byte atacarIgnorandoEscudos();
+	public void atacarIgnorandoEscudos();
 	
 	//Destruir escudo
-	public byte destruirEscudo();
+	public void destruirEscudo();
 	
 	//Enviar dados a enfermeria
 	public void aEnfermeria();
@@ -17,7 +17,7 @@ public interface AccionesCartas {
 	public byte tirarDadoAmenaza();
 	
 	//Amenazas externas recuperan 1 nivel
-	public byte amenazasAumentanNivel();
+	public void amenazasAumentanNivel();
 	
 	//Pohibido asignar dados
 	public void prohibidoAsignar();

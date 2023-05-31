@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -19,6 +21,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
+import clases.Cartas;
 import clases.DadoAmenaza;
 import clases.DadoTripulacion;
 import clases.Nave;
@@ -46,6 +49,7 @@ public class TableroDeJuego extends JPanel {
 	private JButton btnAtacar1;
 	private JLabel tiraDado;
 	private JLabel tiradaDadosTripulantes;
+	private JLabel tiradaAmenaza;
 	private JButton botonPasarAAtaque;
 	private JButton botonAsignar1;
 	private JButton botonAsignar2;
@@ -55,22 +59,35 @@ public class TableroDeJuego extends JPanel {
 	private JButton botonSacarCarta;
 	private JButton botonVolver;
 	private JTextArea textoCartas;
-	private Nave nave;
-	private ZonasNave zonasNave;
+	private Nave navePrueba;
+	private HashMap<String, ZonasNave> zonasNave;
 	private JTextArea textoZona1;
 	private JTextArea textoZona2;
 	private JTextArea textoZona3;
 	private JTextArea textoZona4;
 	private JTextArea textoZona5;
+	JPanel panelActual;
+	private byte valorAmenaza;
+	private Cartas cartas;
+	private JLabel labelEscudoNave;
+	private JLabel labelVidaNave;
 
 	public TableroDeJuego(Ventana v) {
-		Nave nave=new Nave("Nave 1", zonasNave, (byte)4, (byte)3);
+		Nave navePrueba=new Nave("Nave 1", zonasNave, (byte)4, (byte)3);
 		this.ventana = v;
 		v.setSize(1440, 900);
 		setLayout(null);
 		
+		labelEscudoNave = new JLabel("Puntos de Escudo: "+navePrueba.getPuntosEscudo());
+		labelEscudoNave.setBounds(288, 154, 132, 14);
+		add(labelEscudoNave);
+		
+		labelVidaNave = new JLabel("Puntos de vida: "+navePrueba.getPuntosVida());
+		labelVidaNave.setBounds(300, 129, 132, 14);
+		add(labelVidaNave);
+		
 		textoCartas = new JTextArea();
-		textoCartas.setBounds(51, 16, 271, 79);
+		textoCartas.setBounds(51, 16, 242, 100);
 		textoCartas.setEditable(false);
 		add(textoCartas);
 
@@ -85,12 +102,24 @@ public class TableroDeJuego extends JPanel {
 		panelBloqueados.setBounds(430, 429, 152, 103);
 		add(panelBloqueados);
 		panelBloqueados.setLayout(null);
+		
+		JPanel panelAmenaza0 = new JPanel();
+		panelAmenaza0.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelAmenaza0.setBounds(51, 16, 242, 100);
+		add(panelAmenaza0);
+		panelAmenaza0.setLayout(null);
 
 		JPanel panelAmenaza4 = new JPanel();
 		panelAmenaza4.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelAmenaza4.setBounds(1078, 86, 242, 130);
 		add(panelAmenaza4);
 		panelAmenaza4.setLayout(null);
+		
+		JPanel panelAmenaza3 = new JPanel();
+		panelAmenaza3.setBounds(1078, 230, 242, 130);
+		add(panelAmenaza3);
+		panelAmenaza3.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelAmenaza3.setLayout(null);
 
 		JPanel panelAmenaza2 = new JPanel();
 		panelAmenaza2.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -122,6 +151,7 @@ public class TableroDeJuego extends JPanel {
 					resultadosText += resultado + " ";
 				}
 				tiradaDadosTripulantes.setText(resultadosText);
+				
 			}
 		});
 		botonDado.addActionListener(new ActionListener() {
@@ -140,6 +170,14 @@ public class TableroDeJuego extends JPanel {
 		panelAcciones.add(botonDado);
 
 		btnAtacar4 = new JButton("Atacar 4");
+		btnAtacar4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				valorAmenaza=(byte) (valorAmenaza-1);
+				panelAmenaza4.revalidate();
+				panelAmenaza4.repaint();
+
+			}
+		});
 		btnAtacar4.setVisible(false);
 		btnAtacar4.setBounds(66, 106, 150, 80);
 		panelAcciones.add(btnAtacar4);
@@ -165,12 +203,14 @@ public class TableroDeJuego extends JPanel {
 		botonAmenaza.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int resultado = dadoAmenaza.lanzarDado();
-				String funcion= ("Dado de amenaza: ");
-				textoCartas.append(funcion+resultado);
-				// Utiliza el resultado obtenido de la tirada
-				System.out.println("Resultado: " + resultado);
-
+				byte resultado = (byte)dadoAmenaza.lanzarDado();
+				tiradaAmenaza.setText("Dado de Amenaza: "+resultado);
+				if(resultado==cartas.getDadoActivacion()) {
+					cartas.Funcion();
+					System.out.println("Puntos de Escudo: "+navePrueba.getPuntosEscudo());
+				}
+				labelEscudoNave.setText("Puntos de Escudo: "+navePrueba.getPuntosEscudo());
+				labelVidaNave.setText("Puntos de vida: "+navePrueba.getPuntosVida());
 			}
 		});
 		botonAmenaza.setForeground(new Color(0, 0, 0));
@@ -210,9 +250,9 @@ public class TableroDeJuego extends JPanel {
 		botonAsignar4 = new JButton("Asignar a zona 4");
 		botonAsignar4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nave.recargarEscudos();
+				navePrueba.recargarEscudos();
 				String resultado= ("\nEscudos recargados."+ "\nPuntos de escudo: ");
-				textoZona4.append(resultado + nave.getPuntosEscudo());
+				textoZona4.append(resultado + navePrueba.getPuntosEscudo());
 				
 			}
 		});
@@ -223,9 +263,9 @@ public class TableroDeJuego extends JPanel {
 		botonAsignar5 = new JButton("Asignar a zona 5");
 		botonAsignar5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nave.reparacion();
+				navePrueba.reparacion();
 				String resultado= ("\nVida recuperada en 1 punto."+"\nTotal de puntos de vida: ");
-				textoZona5.append(resultado + "\n"+nave.getPuntosVida());
+				textoZona5.append(resultado + "\n"+navePrueba.getPuntosVida());
 			}
 		});
 		botonAsignar5.setVisible(false);
@@ -291,7 +331,11 @@ public class TableroDeJuego extends JPanel {
 
 					// Generar un número aleatorio entre 1 y 4
 					Random r=new Random();
-					byte numeroAleatorio = (byte) r.nextInt(22);
+					byte numeroAleatorio =0;
+							while(numeroAleatorio==0) {
+								numeroAleatorio=(byte) r.nextInt(22);
+							}
+							
 
 					// Crear la sentencia SQL
 					String sql = "SELECT * FROM amenazas WHERE id = ?";
@@ -302,17 +346,61 @@ public class TableroDeJuego extends JPanel {
 
 					// Ejecutar la consulta
 					ResultSet resultSet = statement.executeQuery();
-
+					byte accionQueRealiza = 0;
+					String resultado=null;
+					String colNombre=null;
+					byte colAmenaza=0;
+					byte colDadoActivacion=0;
+					byte colDadoDesactivacion=0;
 					// Obtener y mostrar los resultados en el JTextArea
 					textoCartas.setText("");
 					while (resultSet.next()) {
-						String colNombre=resultSet.getString("Nombre");
-						String colAmenaza=resultSet.getString("ValorAmenaza");
-						String colDadoActivacion = resultSet.getString("DadoActivacion");
-						String resultado=colNombre+"\nValor de Amenaza: "+colAmenaza+"\nDado Activación: "+colDadoActivacion;
-						textoCartas.append(resultado + "\n");
+						colNombre=resultSet.getString("Nombre");
+						colAmenaza=resultSet.getByte("ValorAmenaza");
+						colDadoActivacion = resultSet.getByte("DadoActivacion");
+						accionQueRealiza= resultSet.getByte("AccionQueRealiza");
+						colDadoDesactivacion=resultSet.getByte("DadoDesactivacion");
+						resultado=colNombre+"\nValor de Amenaza: "+colAmenaza+"\n Activación: "+colDadoActivacion;
+						
+						HashSet<Integer> valoresAmenazaOcupadosPanel1 = new HashSet<>();
+						HashSet<Integer> valoresAmenazaOcupadosPanel2 = new HashSet<>();
+						HashSet<Integer> valoresAmenazaOcupadosPanel3 = new HashSet<>();
+						HashSet<Integer> valoresAmenazaOcupadosPanel4 = new HashSet<>();
+						
+						valorAmenaza=resultSet.getByte("ValorAmenaza");
+						
+						
 					}
-
+					
+					String consulta2 = "SELECT Funcion FROM accionquerealiza WHERE id = " + accionQueRealiza;
+					PreparedStatement statement2 = conn.prepareStatement(consulta2);
+					ResultSet resultadoFuncion = statement2.executeQuery();
+					String accionString = null;
+					while (resultadoFuncion.next()) {
+						accionString=resultadoFuncion.getString("Funcion");
+					}
+					resultado+="\nAcción que realiza: "+"\n"+accionString;
+					textoCartas.append(resultado + "\n");
+					
+						switch(valorAmenaza) {
+						case 0:
+							panelAmenaza0.add(textoCartas);
+							break;
+						case 1:
+							panelAmenaza1.add(textoCartas);
+							break;
+						case 2:
+							panelAmenaza2.add(textoCartas);
+							break;
+						case 3:
+							panelAmenaza3.add(textoCartas);
+							break;
+						case 4:
+							panelAmenaza4.add(textoCartas);
+							break;
+						}
+					
+						cartas=new Cartas(colNombre, navePrueba, colAmenaza, colDadoActivacion, accionString, accionQueRealiza, colDadoDesactivacion);
 					// Cerrar la conexión y liberar recursos
 					resultSet.close();
 					statement.close();
@@ -325,41 +413,41 @@ public class TableroDeJuego extends JPanel {
 		botonAsignar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				botonPasarAAtaque.setVisible(true);
+				//nave.tirarDadoDeNuevo();
+				String resultado= ("\nPuntos de ataque: 1");
+				textoZona2.append(resultado);
 
 			}
 		});
 
-		JPanel panelAmenaza3 = new JPanel();
-		panelAmenaza3.setBounds(1078, 230, 242, 130);
-		add(panelAmenaza3);
-		panelAmenaza3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelAmenaza3.setLayout(null);
+
 
 		tiradaDadosTripulantes = new JLabel("Resultados tiradas");
-		tiradaDadosTripulantes.setBounds(95, 127, 277, 45);
+		tiradaDadosTripulantes.setBounds(95, 114, 277, 45);
 		add(tiradaDadosTripulantes);
 		
-		textoCartas = new JTextArea();
-		textoCartas.setBounds(51, 16, 271, 79);
-		add(textoCartas);
-		
 		textoZona1 = new JTextArea();
+		textoZona1.setLineWrap(true);
 		textoZona1.setBounds(654, 273, 201, 73);
 		add(textoZona1);
 		
 		textoZona2 = new JTextArea();
+		textoZona2.setLineWrap(true);
 		textoZona2.setBounds(654, 370, 201, 73);
 		add(textoZona2);
 		
 		textoZona3 = new JTextArea();
+		textoZona3.setLineWrap(true);
 		textoZona3.setBounds(654, 454, 201, 73);
 		add(textoZona3);
 		
 		textoZona4 = new JTextArea();
+		textoZona4.setLineWrap(true);
 		textoZona4.setBounds(654, 547, 201, 73);
 		add(textoZona4);
 		
 		textoZona5 = new JTextArea();
+		textoZona5.setLineWrap(true);
 		textoZona5.setBounds(654, 631, 201, 73);
 		add(textoZona5);
 		JLabel labelTablero = new JLabel("");
@@ -367,6 +455,10 @@ public class TableroDeJuego extends JPanel {
 		labelTablero.setBounds(400, 16, 668, 751);
 		add(labelTablero);
 		setImageLabel(labelTablero, "./images/tableroJuego.jpg");
+		
+		tiradaAmenaza = new JLabel("Dado de Amenaza: ");
+		tiradaAmenaza.setBounds(95, 139, 277, 45);
+		add(tiradaAmenaza);
 	}
 
 	private void setImageLabel(JLabel labelTablero, String raiz) {
