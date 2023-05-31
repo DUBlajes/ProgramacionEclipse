@@ -9,10 +9,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Ventana extends JFrame {
+import clases.Usuario;
 
+public class Ventana extends JFrame {
+	
+	protected Usuario usuarioLogado;
+	
 	public Ventana() {
-		this.setSize(1920, 1080);
+		this.setSize(800, 600);
 		this.setTitle("Programa de prueba de clase");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);

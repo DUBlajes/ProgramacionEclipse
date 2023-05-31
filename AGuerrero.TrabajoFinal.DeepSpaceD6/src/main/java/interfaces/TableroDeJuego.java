@@ -30,6 +30,8 @@ import clases.ZonasNave;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -75,7 +77,7 @@ public class TableroDeJuego extends JPanel {
 	public TableroDeJuego(Ventana v) {
 		Nave navePrueba=new Nave("Nave 1", zonasNave, (byte)4, (byte)3);
 		this.ventana = v;
-		v.setSize(1440, 900);
+		v.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLayout(null);
 		
 		labelEscudoNave = new JLabel("Puntos de Escudo: "+navePrueba.getPuntosEscudo());

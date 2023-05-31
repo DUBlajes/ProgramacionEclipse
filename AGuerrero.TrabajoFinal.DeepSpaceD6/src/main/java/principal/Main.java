@@ -21,9 +21,9 @@ import utils.DAO;
 public class Main {
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(DadosApp::new);
+		//SwingUtilities.invokeLater(DadosApp::new);
 		
-		//Ventana v=new Ventana();
+		Ventana v=new Ventana();
 
 		
 		/*try {
