@@ -69,7 +69,7 @@ public class PantallaEligeNave extends JPanel {
 		botonNave1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ventana.cambiarAPantalla(TableroDeJuego.class);
+				ventana.cambiarAPantalla(PRUEBASTableroDeJuego.class);
 			}
 		});
 		botonNave1.addActionListener(new ActionListener() {

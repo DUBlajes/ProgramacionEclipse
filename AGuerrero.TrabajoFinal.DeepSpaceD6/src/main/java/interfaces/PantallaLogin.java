@@ -33,47 +33,58 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
+
 public class PantallaLogin extends JPanel {
 	private JTextField campoUsuario;
 	private Ventana ventana;
 	private JPasswordField campoPass;
-	
-	
+	private Clip clip;
+
 	public PantallaLogin(Ventana v) {
-		this.ventana=v;
+		this.ventana = v;
 		v.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBackground(new Color(170, 162, 163));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {30, 150, 150, 150, 30};
-		gridBagLayout.rowHeights = new int[] {30, 50, 50, 50, 50, 50, 50, 50, 50, 50, 30};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 30, 150, 150, 150, 30 };
+		gridBagLayout.rowHeights = new int[] { 30, 50, 50, 50, 50, 50, 50, 50, 50, 50, 30 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0 };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
-		
-		
+
 		JButton botonLogin = new JButton("Inicia Sesion");
 		botonLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String usuario=campoUsuario.getText();
-				String pass=new String(campoPass.getPassword());
-				System.out.println(usuario+" : "+pass);
+				String usuario = campoUsuario.getText();
+				String pass = new String(campoPass.getPassword());
+				System.out.println(usuario + " : " + pass);
 				try {
-					ventana.usuarioLogado=new Usuario(usuario, pass);
-					JOptionPane.showMessageDialog(ventana, "Te doy la bienvenida, "+ventana.usuarioLogado.getNick(),"Éxito al iniciar sesión",JOptionPane.INFORMATION_MESSAGE);
+					ventana.usuarioLogado = new Usuario(usuario, pass);
+					JOptionPane.showMessageDialog(ventana, "Te doy la bienvenida, " + ventana.usuarioLogado.getNick(),
+							"Éxito al iniciar sesión", JOptionPane.INFORMATION_MESSAGE);
 					ventana.cambiarAPantalla(PantallaEligeNave.class);
 				} catch (UsuarioNoExisteException e1) {
-					JOptionPane.showMessageDialog(ventana, "El usuario introducido no existe","Error al iniciar sesión",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ventana, "El usuario introducido no existe",
+							"Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
 				} catch (PassInvalidaException e1) {
-					JOptionPane.showMessageDialog(ventana, "La contraseña introducida no es correcta","Error al iniciar sesión",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ventana, "La contraseña introducida no es correcta",
+							"Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(ventana, e1.getMessage(),"No se puede conectar a la base de datos",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ventana, e1.getMessage(), "No se puede conectar a la base de datos",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			}
 		});
-		
+
 		JLabel labelTitulo = new JLabel("Deep Space D-6");
 		labelTitulo.setFont(new Font("Venus Plant", Font.PLAIN, 25));
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
@@ -82,7 +93,7 @@ public class PantallaLogin extends JPanel {
 		gbc_labelTitulo.gridx = 2;
 		gbc_labelTitulo.gridy = 2;
 		add(labelTitulo, gbc_labelTitulo);
-		
+
 		JLabel etiquetaUsuario = new JLabel("Correo electrónico");
 		etiquetaUsuario.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		GridBagConstraints gbc_etiquetaUsuario = new GridBagConstraints();
@@ -91,7 +102,7 @@ public class PantallaLogin extends JPanel {
 		gbc_etiquetaUsuario.gridx = 1;
 		gbc_etiquetaUsuario.gridy = 4;
 		add(etiquetaUsuario, gbc_etiquetaUsuario);
-		
+
 		campoUsuario = new JTextField();
 		GridBagConstraints gbc_campoUsuario = new GridBagConstraints();
 		gbc_campoUsuario.fill = GridBagConstraints.BOTH;
@@ -100,7 +111,7 @@ public class PantallaLogin extends JPanel {
 		gbc_campoUsuario.gridy = 4;
 		add(campoUsuario, gbc_campoUsuario);
 		campoUsuario.setColumns(10);
-		
+
 		JLabel labelPass = new JLabel("Contraseña");
 		labelPass.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_labelPass = new GridBagConstraints();
@@ -109,7 +120,7 @@ public class PantallaLogin extends JPanel {
 		gbc_labelPass.gridx = 1;
 		gbc_labelPass.gridy = 5;
 		add(labelPass, gbc_labelPass);
-		
+
 		campoPass = new JPasswordField();
 		GridBagConstraints gbc_campoPass = new GridBagConstraints();
 		gbc_campoPass.insets = new Insets(0, 0, 5, 5);
@@ -127,7 +138,7 @@ public class PantallaLogin extends JPanel {
 		gbc_botonLogin.gridx = 1;
 		gbc_botonLogin.gridy = 8;
 		add(botonLogin, gbc_botonLogin);
-		
+
 		JButton botonRegistro = new JButton("Registrate");
 		botonRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,14 +161,36 @@ public class PantallaLogin extends JPanel {
 		gbc_botonRegistro.gridy = 8;
 		add(botonRegistro, gbc_botonRegistro);
 		try {
-			BufferedImage imagen=ImageIO.read(new File(".\\images\\icono.jpg"));
-			Image enIcono=imagen.getScaledInstance(256, 256, Image.SCALE_DEFAULT);
+			BufferedImage imagen = ImageIO.read(new File(".\\images\\icono.jpg"));
+			Image enIcono = imagen.getScaledInstance(256, 256, Image.SCALE_DEFAULT);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
+	}
+	private void reproducirCancion() {
+	    try {
+	        // Cargar el archivo de la canción
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./cancionJuego.wav"));
+
+	        // Crear el Clip de audio
+	        clip = AudioSystem.getClip();
+
+	        // Abrir el flujo de audio y establecer la canción como fuente de datos
+	        clip.open(audioInputStream);
+
+	        // Reproducir en bucle
+	        clip.loop(Clip.LOOP_CONTINUOUSLY);
+	    } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+	        e.printStackTrace();
+	    }
+	}
+	@Override
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+
+	    reproducirCancion();
 	}
 
-
-	
 }
