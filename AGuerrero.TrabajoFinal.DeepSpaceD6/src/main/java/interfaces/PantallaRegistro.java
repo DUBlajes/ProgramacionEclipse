@@ -22,6 +22,7 @@ import java.awt.Color;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 
 public class PantallaRegistro extends JPanel{
 	
@@ -31,30 +32,30 @@ public class PantallaRegistro extends JPanel{
 	private JPasswordField campoPass;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	public PantallaRegistro(Ventana v) {
-		setBackground(new Color(0, 0, 0));
+		setBackground(new Color(2, 16, 28));
 		this.ventana=v;
 		v.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 120, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel labelTitulo = new JLabel("Regístrate");
 		labelTitulo.setForeground(new Color(255, 255, 255));
 		labelTitulo.setFont(new Font("Tahoma", Font.BOLD, 30));
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
+		gbc_labelTitulo.gridwidth = 3;
 		gbc_labelTitulo.insets = new Insets(0, 0, 5, 5);
-		gbc_labelTitulo.gridx = 2;
+		gbc_labelTitulo.gridx = 1;
 		gbc_labelTitulo.gridy = 0;
 		add(labelTitulo, gbc_labelTitulo);
 		
 		JLabel labelEmail = new JLabel("Email");
 		labelEmail.setForeground(new Color(255, 255, 255));
-		labelEmail.setFont(new Font("Tahoma", Font.BOLD, 20));
+		labelEmail.setFont(new Font("Tahoma", Font.BOLD, 18));
 		GridBagConstraints gbc_labelEmail = new GridBagConstraints();
-		gbc_labelEmail.anchor = GridBagConstraints.WEST;
 		gbc_labelEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_labelEmail.gridx = 1;
 		gbc_labelEmail.gridy = 1;
@@ -62,9 +63,8 @@ public class PantallaRegistro extends JPanel{
 		
 		campoEmail = new JTextField();
 		GridBagConstraints gbc_campoEmail = new GridBagConstraints();
-		gbc_campoEmail.gridwidth = 2;
-		gbc_campoEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_campoEmail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_campoEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_campoEmail.gridx = 2;
 		gbc_campoEmail.gridy = 1;
 		add(campoEmail, gbc_campoEmail);
@@ -72,9 +72,8 @@ public class PantallaRegistro extends JPanel{
 		
 		JLabel labelNombre = new JLabel("Nombre");
 		labelNombre.setForeground(new Color(255, 255, 255));
-		labelNombre.setFont(new Font("Tahoma", Font.BOLD, 20));
+		labelNombre.setFont(new Font("Tahoma", Font.BOLD, 18));
 		GridBagConstraints gbc_labelNombre = new GridBagConstraints();
-		gbc_labelNombre.anchor = GridBagConstraints.WEST;
 		gbc_labelNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_labelNombre.gridx = 1;
 		gbc_labelNombre.gridy = 2;
@@ -82,7 +81,6 @@ public class PantallaRegistro extends JPanel{
 		
 		campoNombre = new JTextField();
 		GridBagConstraints gbc_campoNombre = new GridBagConstraints();
-		gbc_campoNombre.gridwidth = 2;
 		gbc_campoNombre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_campoNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_campoNombre.gridx = 2;
@@ -92,9 +90,8 @@ public class PantallaRegistro extends JPanel{
 		
 		JLabel labelPass = new JLabel("Contraseña");
 		labelPass.setForeground(new Color(255, 255, 255));
-		labelPass.setFont(new Font("Tahoma", Font.BOLD, 20));
+		labelPass.setFont(new Font("Tahoma", Font.BOLD, 18));
 		GridBagConstraints gbc_labelPass = new GridBagConstraints();
-		gbc_labelPass.anchor = GridBagConstraints.WEST;
 		gbc_labelPass.insets = new Insets(0, 0, 5, 5);
 		gbc_labelPass.gridx = 1;
 		gbc_labelPass.gridy = 3;
@@ -102,9 +99,8 @@ public class PantallaRegistro extends JPanel{
 		
 		campoPass = new JPasswordField();
 		GridBagConstraints gbc_campoPass = new GridBagConstraints();
-		gbc_campoPass.gridwidth = 2;
-		gbc_campoPass.insets = new Insets(0, 0, 5, 5);
 		gbc_campoPass.fill = GridBagConstraints.HORIZONTAL;
+		gbc_campoPass.insets = new Insets(0, 0, 5, 5);
 		gbc_campoPass.gridx = 2;
 		gbc_campoPass.gridy = 3;
 		add(campoPass, gbc_campoPass);
@@ -123,7 +119,6 @@ public class PantallaRegistro extends JPanel{
 		radioHombre.setBackground(new Color(0, 0, 0));
 		buttonGroup.add(radioHombre);
 		GridBagConstraints gbc_radioHombre = new GridBagConstraints();
-		gbc_radioHombre.anchor = GridBagConstraints.EAST;
 		gbc_radioHombre.fill = GridBagConstraints.VERTICAL;
 		gbc_radioHombre.insets = new Insets(0, 0, 5, 5);
 		gbc_radioHombre.gridx = 1;
@@ -145,7 +140,6 @@ public class PantallaRegistro extends JPanel{
 		radioOtro.setForeground(new Color(255, 255, 255));
 		buttonGroup.add(radioOtro);
 		GridBagConstraints gbc_radioOtro = new GridBagConstraints();
-		gbc_radioOtro.anchor = GridBagConstraints.WEST;
 		gbc_radioOtro.insets = new Insets(0, 0, 5, 5);
 		gbc_radioOtro.gridx = 3;
 		gbc_radioOtro.gridy = 6;
@@ -161,6 +155,7 @@ public class PantallaRegistro extends JPanel{
 				try {
 					new Usuario(email, nombre, pass);
 					JOptionPane.showMessageDialog(ventana, "Registrado correctamente","Éxito al registrar",JOptionPane.INFORMATION_MESSAGE);
+					ventana.cambiarAPantalla(PantallaLogin.class);
 				} catch(SQLIntegrityConstraintViolationException e2) {
 					JOptionPane.showMessageDialog(ventana, "El email introducido ya existe","Error al registrar",JOptionPane.ERROR_MESSAGE);
 				}catch (SQLException e1) {
@@ -175,7 +170,7 @@ public class PantallaRegistro extends JPanel{
 		botonRegistrar.setForeground(new Color(255, 255, 255));
 		botonRegistrar.setBackground(new Color(0, 0, 0));
 		GridBagConstraints gbc_botonRegistrar = new GridBagConstraints();
-		gbc_botonRegistrar.fill = GridBagConstraints.BOTH;
+		gbc_botonRegistrar.fill = GridBagConstraints.VERTICAL;
 		gbc_botonRegistrar.insets = new Insets(0, 0, 5, 5);
 		gbc_botonRegistrar.gridx = 2;
 		gbc_botonRegistrar.gridy = 8;
@@ -193,12 +188,20 @@ public class PantallaRegistro extends JPanel{
 				buttonGroup.clearSelection();
 			}
 		});
+		
+		JLabel labelGIF = new JLabel("");
+		labelGIF.setIcon(new ImageIcon(".\\gif (1).gif"));
+		GridBagConstraints gbc_labelGIF = new GridBagConstraints();
+		gbc_labelGIF.insets = new Insets(0, 0, 5, 5);
+		gbc_labelGIF.gridx = 1;
+		gbc_labelGIF.gridy = 10;
+		add(labelGIF, gbc_labelGIF);
 		botonLimpiar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		GridBagConstraints gbc_botonLimpiar = new GridBagConstraints();
-		gbc_botonLimpiar.fill = GridBagConstraints.BOTH;
+		gbc_botonLimpiar.fill = GridBagConstraints.VERTICAL;
 		gbc_botonLimpiar.insets = new Insets(0, 0, 5, 5);
 		gbc_botonLimpiar.gridx = 2;
-		gbc_botonLimpiar.gridy = 10;
+		gbc_botonLimpiar.gridy = 11;
 		add(botonLimpiar, gbc_botonLimpiar);
 		
 		JButton botonAtras = new JButton("Volver atrás");
@@ -214,8 +217,8 @@ public class PantallaRegistro extends JPanel{
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.anchor = GridBagConstraints.SOUTH;
 		gbc_botonAtras.insets = new Insets(0, 0, 5, 5);
-		gbc_botonAtras.gridx = 1;
-		gbc_botonAtras.gridy = 12;
+		gbc_botonAtras.gridx = 2;
+		gbc_botonAtras.gridy = 13;
 		add(botonAtras, gbc_botonAtras);
 	}
 	

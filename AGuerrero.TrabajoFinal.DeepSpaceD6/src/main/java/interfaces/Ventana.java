@@ -9,18 +9,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import clases.Cartas;
 import clases.Usuario;
 
 public class Ventana extends JFrame {
 	
 	protected Usuario usuarioLogado;
+	protected Cartas cartasDisponibles;
 	
 	public Ventana() {
-		this.setSize(800, 600);
-		this.setTitle("Programa de prueba de clase");
+		this.setSize(1920, 1080);
+		this.setTitle("Deep Space D-6");
+		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setContentPane(new PRUEBASTableroDeJuego(this));
+		this.setContentPane(new PantallaLogin(this));
 		this.setIconImage(new ImageIcon("./images/icono.jpg").getImage());
 		this.setVisible(true); // Siempre tiene que ser la última línea del constructor
 	}
@@ -39,8 +42,8 @@ public class Ventana extends JFrame {
 		if(clase.equals(PantallaEligeNave.class)) {
 			this.setContentPane(new PantallaEligeNave(this));
 		}
-		if(clase.equals(PRUEBASTableroDeJuego.class)) {
-			this.setContentPane(new PRUEBASTableroDeJuego(this));
+		if(clase.equals(TableroDeJuego.class)) {
+			this.setContentPane(new TableroDeJuego(this));
 		}
 		this.getContentPane().setVisible(true);
 	}

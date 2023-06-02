@@ -50,13 +50,12 @@ public class PantallaLogin extends JPanel {
 	public PantallaLogin(Ventana v) {
 		this.ventana = v;
 		v.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setBackground(new Color(170, 162, 163));
+		setBackground(new Color(2, 16, 28));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 30, 150, 150, 150, 30 };
 		gridBagLayout.rowHeights = new int[] { 30, 50, 50, 50, 50, 50, 50, 50, 50, 50, 30 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0 };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
-				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 };
 		setLayout(gridBagLayout);
 
 		JButton botonLogin = new JButton("Inicia Sesion");
@@ -86,6 +85,8 @@ public class PantallaLogin extends JPanel {
 		});
 
 		JLabel labelTitulo = new JLabel("Deep Space D-6");
+		labelTitulo.setForeground(new Color(255, 255, 255));
+		labelTitulo.setBackground(new Color(255, 255, 255));
 		labelTitulo.setFont(new Font("Venus Plant", Font.PLAIN, 25));
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
 		gbc_labelTitulo.fill = GridBagConstraints.HORIZONTAL;
@@ -95,6 +96,7 @@ public class PantallaLogin extends JPanel {
 		add(labelTitulo, gbc_labelTitulo);
 
 		JLabel etiquetaUsuario = new JLabel("Correo electrónico");
+		etiquetaUsuario.setForeground(new Color(255, 255, 255));
 		etiquetaUsuario.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		GridBagConstraints gbc_etiquetaUsuario = new GridBagConstraints();
 		gbc_etiquetaUsuario.fill = GridBagConstraints.VERTICAL;
@@ -113,6 +115,8 @@ public class PantallaLogin extends JPanel {
 		campoUsuario.setColumns(10);
 
 		JLabel labelPass = new JLabel("Contraseña");
+		labelPass.setForeground(new Color(255, 255, 255));
+		labelPass.setBackground(new Color(255, 255, 255));
 		labelPass.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_labelPass = new GridBagConstraints();
 		gbc_labelPass.fill = GridBagConstraints.VERTICAL;
@@ -153,7 +157,7 @@ public class PantallaLogin extends JPanel {
 		botonRegistro.setToolTipText("Pínchame para registrarte");
 		botonRegistro.setForeground(Color.WHITE);
 		botonRegistro.setFont(new Font("Venus Plant", Font.PLAIN, 15));
-		botonRegistro.setBackground(new Color(128, 0, 255));
+		botonRegistro.setBackground(new Color(128, 128, 128));
 		GridBagConstraints gbc_botonRegistro = new GridBagConstraints();
 		gbc_botonRegistro.fill = GridBagConstraints.BOTH;
 		gbc_botonRegistro.insets = new Insets(0, 0, 5, 5);
@@ -191,6 +195,21 @@ public class PantallaLogin extends JPanel {
 	    super.paintComponent(g);
 
 	    reproducirCancion();
+	}
+	
+protected void paintComponent1(Graphics g) {
+		
+		super.paintComponent(g);
+		try {
+			BufferedImage fondo=ImageIO.read(new File("./Fondo.jpg"));
+			g.drawImage(fondo, 0, 0, this);
+			g.drawImage(fondo, 0, 0, this.getWidth(), this.getHeight(), new Color(0,0,0), null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 	}
 
 }

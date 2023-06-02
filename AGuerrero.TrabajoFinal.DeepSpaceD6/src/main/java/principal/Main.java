@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import clases.Dado;
 import clases.DadoTripulacion;
-import clases.DadosApp;
+//import clases.DadosApp;
 import interfaces.Ventana;
 import utils.DAO;
 

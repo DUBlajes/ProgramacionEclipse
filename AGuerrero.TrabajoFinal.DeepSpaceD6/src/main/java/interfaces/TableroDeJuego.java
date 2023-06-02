@@ -75,35 +75,23 @@ public class TableroDeJuego extends JPanel {
 	private JLabel labelVidaNave;
 
 	public TableroDeJuego(Ventana v) {
-		Nave navePrueba=new Nave("Nave 1", zonasNave, (byte)4, (byte)3);
+		Nave navePrueba=new Nave("Nave 1", zonasNave, (byte)4, (byte)8);
 		this.ventana = v;
-		v.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		v.setSize(1920, 1080);
 		setLayout(null);
 		
 		labelEscudoNave = new JLabel("Puntos de Escudo: "+navePrueba.getPuntosEscudo());
-		labelEscudoNave.setBounds(288, 154, 132, 14);
+		labelEscudoNave.setBounds(265, 159, 132, 14);
 		add(labelEscudoNave);
 		
 		labelVidaNave = new JLabel("Puntos de vida: "+navePrueba.getPuntosVida());
-		labelVidaNave.setBounds(300, 129, 132, 14);
+		labelVidaNave.setBounds(265, 130, 132, 14);
 		add(labelVidaNave);
 		
 		textoCartas = new JTextArea();
-		textoCartas.setBounds(51, 16, 242, 100);
+		textoCartas.setBounds(51, 16, 304, 100);
 		textoCartas.setEditable(false);
 		add(textoCartas);
-
-		JPanel panelEnfermeria = new JPanel();
-		panelEnfermeria.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelEnfermeria.setBounds(430, 532, 152, 224);
-		add(panelEnfermeria);
-		panelEnfermeria.setLayout(null);
-
-		JPanel panelBloqueados = new JPanel();
-		panelBloqueados.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelBloqueados.setBounds(430, 429, 152, 103);
-		add(panelBloqueados);
-		panelBloqueados.setLayout(null);
 		
 		JPanel panelAmenaza0 = new JPanel();
 		panelAmenaza0.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -113,12 +101,12 @@ public class TableroDeJuego extends JPanel {
 
 		JPanel panelAmenaza4 = new JPanel();
 		panelAmenaza4.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelAmenaza4.setBounds(1078, 86, 242, 130);
+		panelAmenaza4.setBounds(1078, 68, 242, 130);
 		add(panelAmenaza4);
 		panelAmenaza4.setLayout(null);
 		
 		JPanel panelAmenaza3 = new JPanel();
-		panelAmenaza3.setBounds(1078, 230, 242, 130);
+		panelAmenaza3.setBounds(1078, 218, 242, 130);
 		add(panelAmenaza3);
 		panelAmenaza3.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelAmenaza3.setLayout(null);
@@ -165,6 +153,7 @@ public class TableroDeJuego extends JPanel {
 				botonAsignar5.setVisible(true);
 				botonPasarAAtaque.setVisible(false);
 				botonSacarCarta.setVisible(true);
+				botonVolver.setVisible(false);
 			}
 		});
 		botonDado.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -243,6 +232,7 @@ public class TableroDeJuego extends JPanel {
 				//nave.recuperarEnfermos();
 				String resultado= ("\nDados bloqueados"+ "\ny enfermos recuperados");
 				textoZona3.append(resultado + "\n");
+				labelEscudoNave.setText("Puntos de Escudo: "+navePrueba.getPuntosEscudo());
 			}
 		});
 		botonAsignar3.setVisible(false);
@@ -268,6 +258,7 @@ public class TableroDeJuego extends JPanel {
 				navePrueba.reparacion();
 				String resultado= ("\nVida recuperada en 1 punto."+"\nTotal de puntos de vida: ");
 				textoZona5.append(resultado + "\n"+navePrueba.getPuntosVida());
+				labelVidaNave.setText("Puntos de vida: "+navePrueba.getPuntosVida());
 			}
 		});
 		botonAsignar5.setVisible(false);
@@ -298,6 +289,7 @@ public class TableroDeJuego extends JPanel {
 				btnAtacar1.setVisible(false);
 				botonPasarAAtaque.setVisible(true);
 				botonSacarCarta.setVisible(true);
+				botonVolver.setVisible(false);
 			}
 		});
 		botonVolver.setBounds(166, 552, 85, 21);
@@ -318,7 +310,7 @@ public class TableroDeJuego extends JPanel {
 				botonPasarAAtaque.setVisible(false);
 				botonSacarCarta.setVisible(false);
 				botonVolver.setVisible(true);
-				//nave.atacar();
+				
 				
 				
 			}
@@ -372,7 +364,7 @@ public class TableroDeJuego extends JPanel {
 						valorAmenaza=resultSet.getByte("ValorAmenaza");
 						
 						
-					}
+					} 
 					
 					String consulta2 = "SELECT Funcion FROM accionquerealiza WHERE id = " + accionQueRealiza;
 					PreparedStatement statement2 = conn.prepareStatement(consulta2);
@@ -430,27 +422,27 @@ public class TableroDeJuego extends JPanel {
 		
 		textoZona1 = new JTextArea();
 		textoZona1.setLineWrap(true);
-		textoZona1.setBounds(654, 273, 201, 73);
+		textoZona1.setBounds(741, 229, 140, 55);
 		add(textoZona1);
 		
 		textoZona2 = new JTextArea();
 		textoZona2.setLineWrap(true);
-		textoZona2.setBounds(654, 370, 201, 73);
+		textoZona2.setBounds(741, 347, 140, 45);
 		add(textoZona2);
 		
 		textoZona3 = new JTextArea();
 		textoZona3.setLineWrap(true);
-		textoZona3.setBounds(654, 454, 201, 73);
+		textoZona3.setBounds(706, 432, 120, 62);
 		add(textoZona3);
 		
 		textoZona4 = new JTextArea();
 		textoZona4.setLineWrap(true);
-		textoZona4.setBounds(654, 547, 201, 73);
+		textoZona4.setBounds(836, 432, 83, 100);
 		add(textoZona4);
 		
 		textoZona5 = new JTextArea();
 		textoZona5.setLineWrap(true);
-		textoZona5.setBounds(654, 631, 201, 73);
+		textoZona5.setBounds(749, 553, 132, 83);
 		add(textoZona5);
 		JLabel labelTablero = new JLabel("");
 		labelTablero.setBorder(new LineBorder(new Color(0, 0, 0)));

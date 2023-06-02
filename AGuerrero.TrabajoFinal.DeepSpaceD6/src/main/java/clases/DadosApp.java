@@ -1,4 +1,5 @@
-package clases;
+/*package clases;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,122 +8,121 @@ import java.util.List;
 import java.util.Random;
 
 public class DadosApp extends JFrame {
-    private List<Integer> resultadosDados;
-    private JTextArea resultadosTextArea;
-    private List<JButton> botonesAsignar;
-    private boolean boton3Usado;
-    private int contadorBoton6;
 
-    public DadosApp() {
-        setTitle("Dados App");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private JTextArea resultadosTextArea;
+	private ArrayList<Integer> resultadosDados;
+	private ArrayList<JButton> botonesAsignar;
+	private int dadosBloqueados;
+	private boolean dadosRecuperados;
+	private JButton volverButton;
+	private JPanel panel;
 
-        // Crear el ArrayList para almacenar los resultados de los dados
-        resultadosDados = new ArrayList<>();
+	public DadosApp() {
+		setTitle("Dados App");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		resultadosTextArea = new JTextArea(10, 20);
+		resultadosTextArea.setEditable(false);
 
-        // Tirar seis dados de seis caras y agregar los resultados al ArrayList
-        for (int i = 0; i < 6; i++) {
-            int resultado = tirarDado();
-            resultadosDados.add(resultado);
-        }
+		botonesAsignar = new ArrayList<>();
+		dadosBloqueados = 0;
+		dadosRecuperados = false;
 
-        // Crear el JTextArea para mostrar los resultados de los dados
-        resultadosTextArea = new JTextArea(10, 20);
-        resultadosTextArea.setEditable(false);
+		panel = new JPanel(new BorderLayout());
+		panel.add(new JScrollPane(resultadosTextArea), BorderLayout.CENTER);
+		panel.add(createBotonesPanel(), BorderLayout.SOUTH);
 
-        // Crear los botones "Asignar"
-        botonesAsignar = new ArrayList<>();
-        boton3Usado = false;
-        contadorBoton6 = 0;
+		add(panel);
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 
-        for (int i = 1; i <= 6; i++) {
-            JButton botonAsignar = new JButton("Asignar " + i);
-            botonAsignar.addActionListener(new AsignarButtonListener(i));
-            botonesAsignar.add(botonAsignar);
-        }
+		resultadosDados = new ArrayList<>();
+		for (int i = 0; i < 6; i++) {
+			int resultado = tirarDado();
+			resultadosDados.add(resultado);
+		}
+		mostrarResultadosDados();
+	}
 
-        // Crear el panel principal y agregar el JTextArea y los botones
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JScrollPane(resultadosTextArea), BorderLayout.CENTER);
+	private JPanel createBotonesPanel() {
+		JPanel botonesPanel = new JPanel(new FlowLayout());
 
-        JPanel botonesPanel = new JPanel(new FlowLayout());
-        for (JButton boton : botonesAsignar) {
-            botonesPanel.add(boton);
-        }
-        panel.add(botonesPanel, BorderLayout.SOUTH);
+		for (int i = 1; i <= 6; i++) {
+			JButton botonAsignar = new JButton("Asignar " + i);
+			botonAsignar.addActionListener(new AsignarButtonListener(i));
+			botonesPanel.add(botonAsignar);
+			botonesAsignar.add(botonAsignar);
+		}
 
-        // Agregar el panel principal al marco
-        add(panel);
+		return botonesPanel;
+	}
 
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+	private int tirarDado() {
+		Random random = new Random();
+		return random.nextInt(6) + 1;
+	}
 
-        // Mostrar los resultados iniciales de los dados
-        mostrarResultadosDados();
-        actualizarBotones();
-    }
+	private void mostrarResultadosDados() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Resultados de los dados:\n");
+		for (int resultado : resultadosDados) {
+			sb.append(resultado).append("\n");
+		}
+		resultadosTextArea.setText(sb.toString());
+	}
 
-    // Función para tirar un dado de seis caras y obtener un resultado aleatorio
-    private int tirarDado() {
-        Random random = new Random();
-        return random.nextInt(6) + 1;
-    }
+	private void actualizarBotones() {
+		for (JButton boton : botonesAsignar) {
+			int numeroBoton = Integer.parseInt(boton.getText().substring(boton.getText().length() - 1));
 
-    // Mostrar los resultados de los dados en el JTextArea
-    private void mostrarResultadosDados() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Resultados de los dados:\n");
-        for (int resultado : resultadosDados) {
-            sb.append(resultado).append("\n");
-        }
-        resultadosTextArea.setText(sb.toString());
-    }
+			if (numeroBoton == 6) {
+				boton.setEnabled(dadosBloqueados < 3 && !dadosRecuperados);
+			} else {
+				boton.setEnabled(resultadosDados.contains(numeroBoton));
+			}
+		}
+	}
 
-    // Actualizar la disponibilidad de los botones según los resultados de los dados y el estado del botón 3
-    private void actualizarBotones() {
-        for (JButton boton : botonesAsignar) {
-            int numeroBoton = Integer.parseInt(boton.getText().substring(boton.getText().length() - 1));
+	private class AsignarButtonListener implements ActionListener {
+		private int valorAsignar;
 
-            if (numeroBoton == 6) {
-                boton.setEnabled(boton3Usado);
-            } else {
-                boton.setEnabled(resultadosDados.contains(numeroBoton));
-            }
-        }
-    }
+		public AsignarButtonListener(int valorAsignar) {
+			this.valorAsignar = valorAsignar;
+		}
+	}
 
-    // ActionListener para los botones "Asignar"
-    private class AsignarButtonListener implements ActionListener {
-        private int valorAsignar;
-
-        public AsignarButtonListener(int valorAsignar) {
-            this.valorAsignar = valorAsignar;
-        }
-
-        @Override
+		@Override
         public void actionPerformed(ActionEvent e) {
-            // Verificar si el valor a asignar está presente en los resultados de los dados
             if (resultadosDados.contains(valorAsignar)) {
                 resultadosDados.remove((Integer) valorAsignar);
                 mostrarResultadosDados();
 
                 if (valorAsignar == 3) {
-                    boton3Usado = true;
-                    actualizarBotones();
+                    dadosRecuperados = true;
+                    JOptionPane.showMessageDialog(null, "Dados recuperados");
                 }
 
                 if (valorAsignar == 6) {
-                    contadorBoton6++;
-                    if (contadorBoton6 == 3) {
-                        JOptionPane.showMessageDialog(null, "Saca carta de amenaza");
-                        contadorBoton6 = 0;
+                    dadosBloqueados++;
+                    if (dadosBloqueados < 3) {
+                        JOptionPane.showMessageDialog(null, "Dado bloqueado. Saca un 3 para volver a usarlo");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Dado bloqueado por completo. Puedes continuar jugando con los dados restantes.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Dado asignado");
+                    }
+
+                    actualizarBotones();
+
+                    if (resultadosDados.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Has asignado todos los dados. Juego terminado.");
+                        for (JButton boton : botonesAsignar) {
+                            boton.setEnabled(false);
+                        }
+                        volverButton.setEnabled(true);
                     }
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el valor " + valorAsignar);
-            }
-        }
-    }
-}
-
+            
+        
+	
+}*/

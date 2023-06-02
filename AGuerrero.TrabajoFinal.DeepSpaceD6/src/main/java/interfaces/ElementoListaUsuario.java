@@ -5,9 +5,13 @@ import javax.swing.JPanel;
 import clases.Usuario;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Font;
 
 public class ElementoListaUsuario extends JPanel{
@@ -15,6 +19,8 @@ public class ElementoListaUsuario extends JPanel{
 	Usuario usuarioActual;
 	
 	public ElementoListaUsuario(Ventana v, Usuario u) {
+		this.ventana=v;
+		this.usuarioActual=u;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 57, 42, 0, 0};
 		gridBagLayout.rowHeights = new int[]{61, 36, 0, 0};
@@ -22,7 +28,7 @@ public class ElementoListaUsuario extends JPanel{
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel labelEmail = new JLabel(usuarioActual.getEmail());
+		JLabel labelEmail = new JLabel("Usuario registrado: "+ventana.usuarioLogado.getEmail());
 		labelEmail.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_labelEmail = new GridBagConstraints();
 		gbc_labelEmail.anchor = GridBagConstraints.WEST;
@@ -32,15 +38,23 @@ public class ElementoListaUsuario extends JPanel{
 		gbc_labelEmail.gridy = 0;
 		add(labelEmail, gbc_labelEmail);
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Más información");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridx = 4;
 		gbc_btnNewButton.gridy = 0;
 		add(btnNewButton, gbc_btnNewButton);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(ventana, "Nombre: " + u.getNick()+"\nEmail:  "+u.getEmail()+"\nContraseña: Averíguala tú, hacker.",
+						"Más información", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		
-		JLabel labelNombre = new JLabel(usuarioActual.getNick());
+		
+		/*JLabel labelNombre = new JLabel(usuarioActual.getNick());
 		labelNombre.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_labelNombre = new GridBagConstraints();
 		gbc_labelNombre.anchor = GridBagConstraints.WEST;
@@ -48,9 +62,9 @@ public class ElementoListaUsuario extends JPanel{
 		gbc_labelNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_labelNombre.gridx = 0;
 		gbc_labelNombre.gridy = 1;
-		add(labelNombre, gbc_labelNombre);
+		add(labelNombre, gbc_labelNombre);*/
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("---------------------------------------------------------------------");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel.gridx = 0;

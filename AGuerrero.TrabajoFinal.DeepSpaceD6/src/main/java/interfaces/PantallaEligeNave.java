@@ -31,9 +31,9 @@ public class PantallaEligeNave extends JPanel {
 		v.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {30, 300, 300, 300, 30};
-		gridBagLayout.rowHeights = new int[] {30, 640, 30, 30, 0};
+		gridBagLayout.rowHeights = new int[] {30, 640, 30, 0, 30, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel labelNave1 = new JLabel("");
@@ -58,7 +58,7 @@ public class PantallaEligeNave extends JPanel {
 		botonNave1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Nave disponible próximamente","Nave no disponible", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Nave disponible próximamente","Nave no disponible", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -69,7 +69,7 @@ public class PantallaEligeNave extends JPanel {
 		botonNave1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ventana.cambiarAPantalla(PRUEBASTableroDeJuego.class);
+				ventana.cambiarAPantalla(TableroDeJuego.class);
 			}
 		});
 		botonNave1.addActionListener(new ActionListener() {
@@ -87,6 +87,19 @@ public class PantallaEligeNave extends JPanel {
 		gbc_botonNave1_1.gridx = 3;
 		gbc_botonNave1_1.gridy = 2;
 		add(botonNave1_1, gbc_botonNave1_1);
+		
+		JButton botonListado = new JButton("Usuarios Logueados");
+		botonListado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventana.cambiarAPantalla(PantallaListado.class);
+			}
+		});
+		GridBagConstraints gbc_botonListado = new GridBagConstraints();
+		gbc_botonListado.insets = new Insets(0, 0, 5, 5);
+		gbc_botonListado.gridx = 2;
+		gbc_botonListado.gridy = 3;
+		add(botonListado, gbc_botonListado);
 	}
 	
 	
