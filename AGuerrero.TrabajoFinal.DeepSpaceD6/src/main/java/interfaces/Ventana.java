@@ -23,7 +23,7 @@ public class Ventana extends JFrame {
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setContentPane(new PRUEBASTableroDeJuego(this));
+		this.setContentPane(new PantallaLogin(this));
 		this.setIconImage(new ImageIcon("./images/icono.jpg").getImage());
 		this.setVisible(true); // Siempre tiene que ser la última línea del constructor
 	}
