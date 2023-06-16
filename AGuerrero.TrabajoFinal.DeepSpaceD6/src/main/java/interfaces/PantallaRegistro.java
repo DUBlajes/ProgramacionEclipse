@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.event.MouseAdapter;
@@ -15,8 +16,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 
-import clases.Usuario;
+import com.toedter.calendar.JCalendar;
 
+import clases.Usuario;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -26,11 +28,15 @@ import javax.swing.ImageIcon;
 
 public class PantallaRegistro extends JPanel{
 	
+	
+//Meter JCalendar
+	
 	private Ventana ventana;
 	private JTextField campoNombre;
 	private JTextField campoEmail;
 	private JPasswordField campoPass;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private com.toedter.calendar.JDateChooser dateChooser;
 	public PantallaRegistro(Ventana v) {
 		setBackground(new Color(2, 16, 28));
 		this.ventana=v;
@@ -39,8 +45,11 @@ public class PantallaRegistro extends JPanel{
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 120, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		dateChooser=new com.toedter.calendar.JDateChooser();
+		dateChooser.setBounds(320, 90, 200, 30);
+		ventana.add(dateChooser);
 		
 		JLabel labelTitulo = new JLabel("Regístrate");
 		labelTitulo.setForeground(new Color(255, 255, 255));
@@ -104,6 +113,16 @@ public class PantallaRegistro extends JPanel{
 		gbc_campoPass.gridx = 2;
 		gbc_campoPass.gridy = 3;
 		add(campoPass, gbc_campoPass);
+		
+		JCalendar calendar = new JCalendar();
+		GridBagConstraints gbc_calendar = new GridBagConstraints();
+		gbc_calendar.insets = new Insets(0, 0, 5, 0);
+		gbc_calendar.fill = GridBagConstraints.BOTH;
+		gbc_calendar.gridx = 4;
+		gbc_calendar.gridy = 4;
+		add(calendar, gbc_calendar);
+		
+
 		
 		JLabel labelGenero = new JLabel("Género");
 		labelGenero.setForeground(new Color(255, 255, 255));
@@ -220,6 +239,7 @@ public class PantallaRegistro extends JPanel{
 		gbc_botonAtras.gridx = 2;
 		gbc_botonAtras.gridy = 13;
 		add(botonAtras, gbc_botonAtras);
+
 	}
 	
 }

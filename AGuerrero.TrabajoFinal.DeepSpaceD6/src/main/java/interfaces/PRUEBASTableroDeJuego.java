@@ -25,7 +25,7 @@ import javax.swing.border.LineBorder;
 import clases.Cartas;
 import clases.DadoAmenaza;
 import clases.DadoTripulacion;
-//import clases.DadosApp;
+import clases.DadosApp;
 import clases.Nave;
 import clases.ZCabina;
 import clases.ZonasNave;
@@ -57,7 +57,7 @@ public class PRUEBASTableroDeJuego extends JPanel {
 	private JButton btnAtacar1;
 	private JLabel tiraDado;
 	private JLabel tiradaDadosTripulantes;
-	private JLabel tiradaAmenaza;
+	private JLabel tiradaDadoAmenaza;
 	private JButton botonPasarAAtaque;
 	private JButton botonAsignar1;
 	private JButton botonAsignar2;
@@ -83,7 +83,9 @@ public class PRUEBASTableroDeJuego extends JPanel {
 	private Cartas cartas;
 	private JLabel labelEscudoNave;
 	private JLabel labelVidaNave;
-	//private DadosApp dadosApp;
+	private DadosApp dadosApp;
+	private JButton botonSacarCarta;
+	private JButton botonDadoAmenaza;
 	
 	
 	public PRUEBASTableroDeJuego(Ventana v) {
@@ -92,21 +94,22 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		this.ventana = v;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 26, 50, 50, 50, 51, 0, 46, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 26, 50, 50, 50, 51, 0, 46, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		
 		textoCartas= new JTextArea();
 		GridBagConstraints gbc_textoCartas = new GridBagConstraints();
 		gbc_textoCartas.insets = new Insets(0, 0, 5, 5);
 		gbc_textoCartas.gridx = 1;
-		gbc_textoCartas.gridy = 1;
+		gbc_textoCartas.gridy = 2;
 		
 		gbc_textoCartas.fill = GridBagConstraints.BOTH;
 		add(textoCartas, gbc_textoCartas);
 		textoCartas.setLineWrap(false);
 		textoCartas.setEditable(false);
+		
 		
 		JPanel panelAmenaza0 = new JPanel();
 		panelAmenaza0.setBorder(new LineBorder(new Color(0, 0, 0), 3));
@@ -115,7 +118,7 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		gbc_panelAmenaza0.insets = new Insets(0, 0, 5, 5);
 		gbc_panelAmenaza0.fill = GridBagConstraints.BOTH;
 		gbc_panelAmenaza0.gridx = 1;
-		gbc_panelAmenaza0.gridy = 2;
+		gbc_panelAmenaza0.gridy = 3;
 		add(panelAmenaza0, gbc_panelAmenaza0);
 
 		
@@ -129,7 +132,7 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		gbc_labelTablero.gridwidth = 8;
 		gbc_labelTablero.insets = new Insets(0, 0, 5, 5);
 		gbc_labelTablero.gridx = 2;
-		gbc_labelTablero.gridy = 2;
+		gbc_labelTablero.gridy = 3;
 		add(labelTablero, gbc_labelTablero);
 		setImageLabel(labelTablero, "./images/tableroJuego.jpg");
 		
@@ -138,7 +141,7 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		GridBagConstraints gbc_panelAmenaza4 = new GridBagConstraints();
 		gbc_panelAmenaza4.insets = new Insets(0, 0, 5, 5);
 		gbc_panelAmenaza4.gridx = 10;
-		gbc_panelAmenaza4.gridy = 2;
+		gbc_panelAmenaza4.gridy = 3;
 		add(panelAmenaza4, gbc_panelAmenaza4);
 		
 		JPanel panelDadosTrip = new JPanel();
@@ -147,7 +150,7 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		gbc_panelDadosTrip.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDadosTrip.fill = GridBagConstraints.BOTH;
 		gbc_panelDadosTrip.gridx = 1;
-		gbc_panelDadosTrip.gridy = 4;
+		gbc_panelDadosTrip.gridy = 5;
 		add(panelDadosTrip, gbc_panelDadosTrip);
 		
 		JPanel panelAmenaza3 = new JPanel();
@@ -155,10 +158,10 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		GridBagConstraints gbc_panelAmenaza3 = new GridBagConstraints();
 		gbc_panelAmenaza3.insets = new Insets(0, 0, 5, 5);
 		gbc_panelAmenaza3.gridx = 10;
-		gbc_panelAmenaza3.gridy = 4;
+		gbc_panelAmenaza3.gridy = 5;
 		add(panelAmenaza3, gbc_panelAmenaza3);
 		
-		/*JButton dadoTripulacion = new JButton("Tirar dados tripulacion");
+		JButton dadoTripulacion = new JButton("Tirar dados tripulacion");
 		dadoTripulacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dadosApp=new DadosApp();
@@ -168,20 +171,24 @@ public class PRUEBASTableroDeJuego extends JPanel {
 				panelDadosTrip.add(dadosApp.getContentPane());
 				panelDadosTrip.revalidate();
 				panelDadosTrip.repaint();
+				botonSacarCarta.setVisible(true);
+				botonDadoAmenaza.setVisible(false);
+				
 			}
 		});
 		GridBagConstraints gbc_dadoTripulacion = new GridBagConstraints();
 		gbc_dadoTripulacion.insets = new Insets(0, 0, 5, 5);
 		gbc_dadoTripulacion.gridx = 1;
-		gbc_dadoTripulacion.gridy = 5;
+		gbc_dadoTripulacion.gridy = 6;
 		add(dadoTripulacion, gbc_dadoTripulacion);
-		*/
 		
-		JButton botonSacarCarta = new JButton("Sacar Carta Amenaza");
+		
+		botonSacarCarta = new JButton("Sacar Carta Amenaza");
+		botonSacarCarta.setVisible(false);
 		GridBagConstraints gbc_botonSacarCarta = new GridBagConstraints();
 		gbc_botonSacarCarta.insets = new Insets(0, 0, 5, 5);
 		gbc_botonSacarCarta.gridx = 1;
-		gbc_botonSacarCarta.gridy = 6;
+		gbc_botonSacarCarta.gridy = 7;
 		add(botonSacarCarta, gbc_botonSacarCarta);
 		
 		JPanel panelAmenaza2 = new JPanel();
@@ -189,15 +196,43 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		GridBagConstraints gbc_panelAmenaza2 = new GridBagConstraints();
 		gbc_panelAmenaza2.insets = new Insets(0, 0, 5, 5);
 		gbc_panelAmenaza2.gridx = 10;
-		gbc_panelAmenaza2.gridy = 6;
+		gbc_panelAmenaza2.gridy = 7;
 		add(panelAmenaza2, gbc_panelAmenaza2);
+		
+		botonDadoAmenaza = new JButton("Tirar dado amenaza");
+		botonDadoAmenaza.setVisible(false);
+		botonDadoAmenaza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Random random = new Random();
+                int resultado = random.nextInt(6) + 1;
+                tiradaDadoAmenaza.setText("Dado de Amenaza: "+resultado);
+                if(resultado==cartas.getDadoActivacion()) {
+					cartas.Funcion();
+					System.out.println("Puntos de Escudo: "+navePrueba.getPuntosEscudo());
+				}
+                	
+                	
+			}
+		});
+		GridBagConstraints gbc_botonDadoAmenaza = new GridBagConstraints();
+		gbc_botonDadoAmenaza.insets = new Insets(0, 0, 5, 5);
+		gbc_botonDadoAmenaza.gridx = 1;
+		gbc_botonDadoAmenaza.gridy = 8;
+		add(botonDadoAmenaza, gbc_botonDadoAmenaza);
+		
+		tiradaDadoAmenaza = new JLabel("New label");
+		GridBagConstraints gbc_tiradaDadoAmenaza = new GridBagConstraints();
+		gbc_tiradaDadoAmenaza.insets = new Insets(0, 0, 5, 5);
+		gbc_tiradaDadoAmenaza.gridx = 1;
+		gbc_tiradaDadoAmenaza.gridy = 10;
+		add(tiradaDadoAmenaza, gbc_tiradaDadoAmenaza);
 		
 		JPanel panelAmenaza1 = new JPanel();
 		panelAmenaza1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelAmenaza1 = new GridBagConstraints();
 		gbc_panelAmenaza1.insets = new Insets(0, 0, 5, 5);
 		gbc_panelAmenaza1.gridx = 10;
-		gbc_panelAmenaza1.gridy = 10;
+		gbc_panelAmenaza1.gridy = 11;
 		add(panelAmenaza1, gbc_panelAmenaza1);
 		
 		botonSacarCarta.addActionListener(new ActionListener() {
@@ -287,6 +322,7 @@ public class PRUEBASTableroDeJuego extends JPanel {
 				} catch (SQLException ex) {
 					ex.printStackTrace();
 				}
+				botonDadoAmenaza.setVisible(true);
 			}
 		});
 

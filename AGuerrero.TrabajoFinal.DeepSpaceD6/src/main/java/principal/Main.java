@@ -22,9 +22,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		//SwingUtilities.invokeLater(DadosApp::new);
-		
-		Ventana v=new Ventana();
 
+		Ventana v=new Ventana();
+		
+		
 		
 		/*try {
 			BufferedImage imagen = ImageIO.read(new File("./images/tableroJuego.jpg"));

@@ -16,6 +16,9 @@ import excepciones.PassInvalidaException;
 import excepciones.UsuarioNoExisteException;
 
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
@@ -23,6 +26,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
@@ -57,6 +61,41 @@ public class PantallaLogin extends JPanel {
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0 };
 		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 };
 		setLayout(gridBagLayout);
+		
+		
+		JPanel panel = new JPanel();
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu archivoMenu = new JMenu("Archivo");
+        JMenu opcionesMenu = new JMenu("Opciones");
+
+        JMenuItem cerrarItem = new JMenuItem("Cerrar");
+        cerrarItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        
+        
+        JMenuItem sobreItem = new JMenuItem("Sobre esta versión");
+        sobreItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(panel, "Información de la versión: 1.2"+"\n - Se añade un menú superior, "+"\n - Un calendario en la pantalla de registro "+"\n - Un botón para acceder a un enlace externo.", "Sobre esta versión", JOptionPane.INFORMATION_MESSAGE); //ventana, "Registrado correctamente","Éxito al registrar",JOptionPane.INFORMATION_MESSAGE)
+            }
+        });
+
+        archivoMenu.add(cerrarItem);
+        opcionesMenu.add(sobreItem);
+
+        menuBar.add(archivoMenu);
+        menuBar.add(opcionesMenu);
+
+        v.setJMenuBar(menuBar);
+        v.add(panel);
+    
 
 		JButton botonLogin = new JButton("Inicia Sesion");
 		botonLogin.addMouseListener(new MouseAdapter() {
@@ -154,6 +193,30 @@ public class PantallaLogin extends JPanel {
 				ventana.cambiarAPantalla(PantallaRegistro.class);
 			}
 		});
+		
+		JButton botonEnlaceWeb = new JButton("Trailer FTL");
+		botonEnlaceWeb.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		botonEnlaceWeb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(java.awt.Desktop.isDesktopSupported()) {
+					java.awt.Desktop desktop=java.awt.Desktop.getDesktop();
+					
+					if(desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
+						try {
+							java.net.URI uri=new java.net.URI("https://youtu.be/dQw4w9WgXcQ");
+							desktop.browse(uri);
+						}catch(URISyntaxException | IOException e1) {}
+						}
+					}
+				}
+				
+		});
+		GridBagConstraints gbc_botonEnlaceWeb = new GridBagConstraints();
+		gbc_botonEnlaceWeb.fill = GridBagConstraints.BOTH;
+		gbc_botonEnlaceWeb.insets = new Insets(0, 0, 5, 5);
+		gbc_botonEnlaceWeb.gridx = 2;
+		gbc_botonEnlaceWeb.gridy = 8;
+		add(botonEnlaceWeb, gbc_botonEnlaceWeb);
 		botonRegistro.setToolTipText("Pínchame para registrarte");
 		botonRegistro.setForeground(Color.WHITE);
 		botonRegistro.setFont(new Font("Venus Plant", Font.PLAIN, 15));
