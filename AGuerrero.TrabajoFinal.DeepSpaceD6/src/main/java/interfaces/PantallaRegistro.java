@@ -9,8 +9,10 @@ import javax.swing.JFrame;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Date;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -19,12 +21,15 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JCalendar;
 
 import clases.Usuario;
+import excepciones.PassInvalidaException;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import com.toedter.calendar.JDateChooser;
 
 public class PantallaRegistro extends JPanel{
 	
@@ -44,12 +49,12 @@ public class PantallaRegistro extends JPanel{
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 120, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		dateChooser=new com.toedter.calendar.JDateChooser();
 		dateChooser.setBounds(320, 90, 200, 30);
-		ventana.add(dateChooser);
+		ventana.getContentPane().add(dateChooser);
 		
 		JLabel labelTitulo = new JLabel("Regístrate");
 		labelTitulo.setForeground(new Color(255, 255, 255));
@@ -114,13 +119,22 @@ public class PantallaRegistro extends JPanel{
 		gbc_campoPass.gridy = 3;
 		add(campoPass, gbc_campoPass);
 		
-		JCalendar calendar = new JCalendar();
-		GridBagConstraints gbc_calendar = new GridBagConstraints();
-		gbc_calendar.insets = new Insets(0, 0, 5, 0);
-		gbc_calendar.fill = GridBagConstraints.BOTH;
-		gbc_calendar.gridx = 4;
-		gbc_calendar.gridy = 4;
-		add(calendar, gbc_calendar);
+		JLabel labelFechaNacimiento = new JLabel("Fecha de nacimiento");
+		labelFechaNacimiento.setForeground(Color.WHITE);
+		labelFechaNacimiento.setFont(new Font("Tahoma", Font.BOLD, 18));
+		GridBagConstraints gbc_labelFechaNacimiento = new GridBagConstraints();
+		gbc_labelFechaNacimiento.insets = new Insets(0, 0, 5, 5);
+		gbc_labelFechaNacimiento.gridx = 1;
+		gbc_labelFechaNacimiento.gridy = 4;
+		add(labelFechaNacimiento, gbc_labelFechaNacimiento);
+		
+		JDateChooser calendarioFecha = new JDateChooser();
+		calendarioFecha.setDateFormatString("yyyy/MM/dd");
+		GridBagConstraints gbc_calendarioFecha = new GridBagConstraints();
+		gbc_calendarioFecha.insets = new Insets(0, 0, 5, 5);
+		gbc_calendarioFecha.gridx = 2;
+		gbc_calendarioFecha.gridy = 4;
+		add(calendarioFecha, gbc_calendarioFecha);
 		
 
 		
@@ -173,12 +187,15 @@ public class PantallaRegistro extends JPanel{
 				String pass=new String(campoPass.getPassword());
 				try {
 					new Usuario(email, nombre, pass);
+
 					JOptionPane.showMessageDialog(ventana, "Registrado correctamente","Éxito al registrar",JOptionPane.INFORMATION_MESSAGE);
 					ventana.cambiarAPantalla(PantallaLogin.class);
 				} catch(SQLIntegrityConstraintViolationException e2) {
 					JOptionPane.showMessageDialog(ventana, "El email introducido ya existe","Error al registrar",JOptionPane.ERROR_MESSAGE);
 				}catch (SQLException e1) {
 					JOptionPane.showMessageDialog(ventana, e1.getMessage(),"No se puede conectar a la base de datos",JOptionPane.ERROR_MESSAGE);
+				}catch (PassInvalidaException e2) {
+					JOptionPane.showMessageDialog(ventana, e2.getMessage(),"El campo contraseña no puede estar vacío",JOptionPane.ERROR_MESSAGE);
 				}
 				
 				

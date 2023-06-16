@@ -2,6 +2,10 @@ package interfaces;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -32,6 +36,7 @@ import clases.ZonasNave;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.Font;
@@ -93,9 +98,9 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		Nave navePrueba = new Nave("Nave 1", zonasNave, (byte) 4, (byte) 3);
 		this.ventana = v;
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0 };
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 26, 50, 50, 50, 51, 0, 46, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		
@@ -220,12 +225,19 @@ public class PRUEBASTableroDeJuego extends JPanel {
 		gbc_botonDadoAmenaza.gridy = 8;
 		add(botonDadoAmenaza, gbc_botonDadoAmenaza);
 		
-		tiradaDadoAmenaza = new JLabel("New label");
+		tiradaDadoAmenaza = new JLabel("");
 		GridBagConstraints gbc_tiradaDadoAmenaza = new GridBagConstraints();
 		gbc_tiradaDadoAmenaza.insets = new Insets(0, 0, 5, 5);
 		gbc_tiradaDadoAmenaza.gridx = 1;
 		gbc_tiradaDadoAmenaza.gridy = 10;
 		add(tiradaDadoAmenaza, gbc_tiradaDadoAmenaza);
+		
+		JLabel avatarLabel = new JLabel("");
+		GridBagConstraints gbc_avatarLabel = new GridBagConstraints();
+		gbc_avatarLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_avatarLabel.gridx = 12;
+		gbc_avatarLabel.gridy = 10;
+		add(avatarLabel, gbc_avatarLabel);
 		
 		JPanel panelAmenaza1 = new JPanel();
 		panelAmenaza1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -326,6 +338,56 @@ public class PRUEBASTableroDeJuego extends JPanel {
 			}
 		});
 
+		
+		JPanel panel = new JPanel();
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu archivoMenu = new JMenu("Archivo");
+        JMenu opcionesMenu = new JMenu("Opciones");
+
+        JMenuItem cerrarItem = new JMenuItem("Cerrar");
+        cerrarItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        
+        
+        JMenuItem sobreItem = new JMenuItem("Sobre esta versión");
+        sobreItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(panel, "Información de la versión: 1.2"+"\n - Se añade un menú superior, "+"\n - Un calendario en la pantalla de registro "+"\n - Un botón para acceder a un enlace externo.", "Sobre esta versión", JOptionPane.INFORMATION_MESSAGE); //ventana, "Registrado correctamente","Éxito al registrar",JOptionPane.INFORMATION_MESSAGE)
+            }
+        });
+        
+        JMenuItem avatarItem=new JMenuItem("Elige Avatar");
+        avatarItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser=new JFileChooser();
+				int result=fileChooser.showOpenDialog(v);
+				if(result==JFileChooser.APPROVE_OPTION) {
+					File avatarSeleccionado=fileChooser.getSelectedFile();
+					ImageIcon avatarImagen=new ImageIcon(avatarSeleccionado.getAbsolutePath());
+					avatarLabel.setIcon(avatarImagen);
+				}
+				
+			}
+        	
+        });
+
+        archivoMenu.add(cerrarItem);
+        opcionesMenu.add(sobreItem);
+        opcionesMenu.add(avatarItem);
+        menuBar.add(archivoMenu);
+        menuBar.add(opcionesMenu);
+
+        v.setJMenuBar(menuBar);
+        v.getContentPane().add(panel);
 
 	}
 

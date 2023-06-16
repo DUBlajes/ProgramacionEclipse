@@ -2,6 +2,7 @@ package interfaces;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.Color;
@@ -63,38 +64,7 @@ public class PantallaLogin extends JPanel {
 		setLayout(gridBagLayout);
 		
 		
-		JPanel panel = new JPanel();
-
-        JMenuBar menuBar = new JMenuBar();
-        JMenu archivoMenu = new JMenu("Archivo");
-        JMenu opcionesMenu = new JMenu("Opciones");
-
-        JMenuItem cerrarItem = new JMenuItem("Cerrar");
-        cerrarItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        
-        
-        JMenuItem sobreItem = new JMenuItem("Sobre esta versión");
-        sobreItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(panel, "Información de la versión: 1.2"+"\n - Se añade un menú superior, "+"\n - Un calendario en la pantalla de registro "+"\n - Un botón para acceder a un enlace externo.", "Sobre esta versión", JOptionPane.INFORMATION_MESSAGE); //ventana, "Registrado correctamente","Éxito al registrar",JOptionPane.INFORMATION_MESSAGE)
-            }
-        });
-
-        archivoMenu.add(cerrarItem);
-        opcionesMenu.add(sobreItem);
-
-        menuBar.add(archivoMenu);
-        menuBar.add(opcionesMenu);
-
-        v.setJMenuBar(menuBar);
-        v.add(panel);
+		
     
 
 		JButton botonLogin = new JButton("Inicia Sesion");

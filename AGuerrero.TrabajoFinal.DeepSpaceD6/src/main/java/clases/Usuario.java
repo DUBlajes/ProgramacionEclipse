@@ -1,10 +1,11 @@
 package clases;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
-
 import excepciones.PassInvalidaException;
 import excepciones.UsuarioNoExisteException;
 import utils.DAO;
@@ -13,9 +14,10 @@ public class Usuario {
 	private String email;
 	private String nombre;
 	private String pass;
+
 	private boolean usuarionuevo;
 
-	public Usuario(String email, String nombre, String pass) throws SQLException {
+	public Usuario(String email, String nombre, String pass) throws SQLException, PassInvalidaException {
 		super();
 		this.email = email;
 		this.nombre = nombre;
@@ -94,6 +96,8 @@ public class Usuario {
 	public String getNick() {
 		return nombre;
 	}
+
+	
 
 	public void setNick(String nick) {
 		// Usa la función actualizar de la clase DAO para cambiar el valor del nick en
