@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 
+import excepciones.PassInvalidaException;
+
 /**
  * Clase de Acceso a Base de datos, abstracta, que permite hacer de forma
  * sencilla y sin preocuparse de la sintaxis SQL, las operaciones CRUD (Create,
@@ -59,7 +61,7 @@ public abstract class DAO {
 
 	}
 
-	public static int insert(String table, HashMap<String, Object> campos) throws SQLException {
+	public static int insert(String table, HashMap<String, Object> campos) throws SQLException, PassInvalidaException {
 		Statement querier = connect();
 		// insert into cliente (email, nombre, contraseña) values ('ladlads@asdasd.es',
 		// 'aaa','123132');
@@ -86,6 +88,10 @@ public abstract class DAO {
 
 		if (Config.verboseMode) {
 			System.out.println(query);
+		}
+		
+		if(campos.containsKey("pass") && campos.get("pass").toString().isEmpty()) {
+			throw new PassInvalidaException("La contraseña no puede estar vacia");
 		}
 		int ret = querier.executeUpdate(query);
 		disconnect(querier);
